@@ -1,0 +1,33 @@
+﻿// Configure bundling and minification for the project.
+// More info at https://go.microsoft.com/fwlink/?LinkId=808241
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    // An array of relative input file paths. Globbing patterns supported
+    "inputFiles": [
+      "wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
+      "wwwroot/css/bootstrapValidator.min.css",
+      "wwwroot/lib/swiper/swiper.min.css",
+      "wwwroot/css/style.min.css",
+      "wwwroot/lib/swiper/swiper.min.css",
+      "wwwroot/lib/layer_mobile/need/layer.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/site.min.js",
+    "inputFiles": [
+      "wwwroot/lib/jquery/dist/jquery.js",
+      "wwwroot/lib/bootstrap/dist/js/bootstrap.js",
+      "wwwroot/lib/swiper/swiper.min.js",
+      "wwwroot/lib/layer_mobile/layer.js",
+      "wwwroot/js/layerCommon.js"
+    ],
+    // Optionally specify minification options
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    // Optionally generate .map file
+    "sourceMap": false
+  }
+]

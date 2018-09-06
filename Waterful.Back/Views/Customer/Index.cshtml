@@ -1,0 +1,114 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core
+@model StaticPagedList<Waterful.Core.Models.Customer>
+
+@{
+    ViewData["Title"] = "用户管理";
+    ViewData["MenuId"] = "0300";
+    var begin = ViewData["begin"] ?? "";
+    var end = ViewData["end"] ?? "";
+    var mobile = ViewData["mobile"] ?? "";
+    var name = ViewData["name"] ?? "";
+    var isAngel = ViewData["isAngel"] ?? "0";
+}
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3>@ViewData["Title"]</h3>
+            <form asp-action="Index" method="get">
+                <div class='col-md-3'>
+                    <div class="form-group">
+                        <div class='input-group date' id='begin'>
+                            <input type='text' class="form-control" name="begin" value="@begin" placeholder="开始时间" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-md-3'>
+                    <div class="form-group">
+                        <div class='input-group date' id='end'>
+                            <input type='text' class="form-control" name="end" value="@end" placeholder="结束时间" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3"><div class="form-group"><input type="text" name="mobile" class="form-control" placeholder="注册手机" value="@mobile" /></div></div>
+                <div class="col-md-3"><div class="form-group"><input type="text" name="name" class="form-control" placeholder="微信昵称" value="@name" /></div></div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select class="form-control" id="isAngel" name="isAngel">
+                            <option value="0">全部</option>
+                            <option value="1">普通用户</option>
+                            <option value="2">天使用户</option>
+                            <option value="3">大使用户</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4"><button type="submit" class="btn btn-default"><i class="fa fa-search"></i> 查询</button></div>
+            </form>
+        </div>
+        <div class="box-body table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>用户Id</th>
+                        <th>推荐人Id</th>
+                        <th>用户账号</th>
+                        <th>微信昵称</th>
+                        <th>支付标识</th>
+                        <th>注册时间</th>
+                        <th>设置</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@(item.IntroducId==0?"无": item.IntroducId.ToString())</td>
+                            <td>@item.Mobile</td>
+                            <td>@item.NickName</td>
+                            <td>@(item.IsPay?"支付过":"从未支付")</td>
+                            <td>@item.CreateTime</td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">收货详情</a>
+                                <a asp-action="Set" asp-route-id="@item.Id" class="btn btn-info btn-sm">@(item.IsAngel?"大使用户":"天使用户")</a>
+                                <a asp-action="Info" asp-route-id="@item.Id" class="btn btn-info btn-sm">聊天记录</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer">
+            @Html.PagedListPager((IPagedList)Model, p => Url.Action("Index", new { p = p, begin = begin, end = end, mobile = mobile, name = name }))
+        </div>
+    </div>
+</section>
+@section scripts{
+    <link href="~/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="~/lib/moment/min/moment.min.js"></script>
+    <script src="~/lib/moment/locale/zh-cn.js"></script>
+    <script src="~/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+        $(function () {
+             //select默认值
+            $("#isAngel").get(0).value = '@isAngel';
+
+            $('#begin').datetimepicker({
+                sideBySide: true,
+                format: 'YYYY-MM-DD HH:mm'
+            });
+            $('#end').datetimepicker({
+                sideBySide: true,
+                format: 'YYYY-MM-DD HH:mm'
+            });
+        });
+    </script>
+}
+
+

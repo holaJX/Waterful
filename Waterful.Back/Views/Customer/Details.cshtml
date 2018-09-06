@@ -1,0 +1,61 @@
+﻿@model Waterful.Core.Models.Customer
+
+@{
+    ViewData["Title"] = "用户信息";
+    ViewData["MenuId"] = "0300";
+}
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+        <div class="form-horizontal">
+            <div class="box-body">
+                <div class="form-group"><label class="col-md-3">用户Id：@Model.Id</label></div>
+                <div class="form-group"><label class="col-md-3">推荐人Id：@(Model.IntroducId == 0 ? "无" : Model.IntroducId.ToString())</label></div>
+                <div class="form-group"><label class="col-md-3">用户账号：@Model.Mobile</label></div>
+                <div class="form-group"><label class="col-md-3">微信昵称：@Model.NickName</label></div>
+                <div class="form-group"><label class="col-md-3">支付标识：@(Model.IsPay?"支付过":"从未支付")</label></div>
+                <div class="form-group"><label class="col-md-3">用户类别：@(Model.IsAngel ? "大使用户" : "天使用户")</label></div>
+                <div class="form-group"><label class="col-md-3">注册时间：@Model.CreateTime</label></div>
+                <div class="form-group"><label class="col-md-3">更新时间：@Model.UpdateTime</label></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">收货地址</h3>
+        </div>
+        <div class="box-body table-responsive">
+            @if (Model.Addresses.Count > 0)
+            {
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>电话</th>
+                            <th>收货地址</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Addresses.OrderByDescending(i => i.Sort).Where(i => i.Status > 0))
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.Mobile</td>
+                                <td>@item.Street</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <lable>暂无数据</lable>
+            }
+        </div>
+    </div>
+    <a asp-action="Index" class="btn btn-primary" style="width: 80px;">返回</a>
+</section>

@@ -1,0 +1,46 @@
+﻿@model Waterful.Core.Models.Order
+
+@{
+    ViewData["Title"] = "确认取消";
+    int type = 0;
+    if (Model.OrderType == 1)
+    {
+        if (Model.ParentId == 0)
+        {
+            type = 1;
+        }
+        else
+        {
+            type = 5;
+        }
+    }
+    else if (Model.OrderType == 2)
+    {
+        if (Model.ParentId == 0)
+        {
+            type = 2;
+        }
+        else
+        {
+            type = 6;
+        }
+    }
+    ViewData["MenuId"] = "020" + type;
+}
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">是否确认取消订单</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form asp-action="Cancel" class="form-horizontal">
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" id="btnSubmit" class="btn btn-primary" style="width: 80px;">确认</button>
+                <a asp-action="Index" asp-route-id="@type" class="btn btn-primary" style="width: 80px;">返回</a>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+</section>

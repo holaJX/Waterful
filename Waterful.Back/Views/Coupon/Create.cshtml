@@ -1,0 +1,227 @@
+﻿@model Waterful.Back.ViewModels.CouponVM
+
+@{
+    ViewData["Title"] = "生成券";
+    ViewData["MenuId"] = "0103";
+}
+
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">添加券</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" asp-action="Create">
+            <div class="box-body">
+                <input id="errorInfo" type="hidden" value="@ViewBag.ErrorInfo" />
+                @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*券名称</label>
+                    <div class="col-md-10">
+                        <input id="Name" asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">线上/线下</label>
+                    <div class="col-md-10">
+                        <select class="form-control" id="coupon_type_id" name="CouponType">
+                            <option value="1">线上</option>
+                            <option value="2">线下</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">券类型</label>
+                    <div class="col-md-10">
+                        <select class="form-control" id="select_id" name="Type">
+                            <option value="1">代金券</option>
+                            <option value="4">免安装费券</option>
+                            <option value="5">免押金券</option>
+                            <option value="2">体验券</option>
+                            @*<option value="3">礼品券</option>*@
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*生成券数量</label>
+                    <div class="col-md-10">
+                        <input id="Number" type="number" asp-for="Number" min="1" max="500" class="form-control" />
+                        @*<span asp-validation-for="ProductNo" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*有效期（月）</label>
+                    <div class="col-md-10">
+                        <input id="ExpiryNum" tye="number" asp-for="ExpiryNum" min="0" max="500" class="form-control" />
+                        <span asp-validation-for="ExpiryNum" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group" id="DivDiscount">
+                    <label class="col-md-2 control-label">优惠金额</label>
+                    <div class="col-md-10">
+                        <input id="Discount" type="number" asp-for="Discount" min="0.00" step="0.01" class="form-control" />
+                        <span asp-validation-for="Discount" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group" id="DivFeelTime">
+                    <label class="col-md-2 control-label">*体验时长（月）</label>
+                    <div class="col-md-10">
+                        <input asp-for="FeelTime" id="FeelTime" min="0" class="form-control" />
+                        <span asp-validation-for="FeelTime" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">备注</label>
+                    <div class="col-md-10">
+                        <input asp-for="Remark" class="form-control" />
+                        <span asp-validation-for="Remark" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" id="btnSubmit" class="btn btn-primary" style="width: 80px;">生成</button>
+                <a asp-action="Index" class="btn btn-primary" style="width: 80px;">返回</a>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+</section>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#DivDiscount").show();
+        $("#DivFeelTime").hide();
+        $("select[name='Type']").change(function () {
+            var selected_value = $(this).val();
+            if (selected_value == 1) {
+                $("#DivDiscount").show();
+            } else {
+                $("#DivDiscount").hide();
+            }
+            if (selected_value == 2) {
+                $("#DivFeelTime").show();
+            } else {
+                $("#DivFeelTime").hide();
+            }
+
+
+        });
+
+        if ($("#errorInfo").val()) {
+            layer.tips($("#errorInfo").val(), "#btnSubmit");
+        };
+    });
+
+</script>
+<script type="text/javascript">
+    var btnSubmit = $("#btnSubmit"),
+        Name = $("#Name"),
+        Number = $("#Number"),
+        ExpiryNum = $('#ExpiryNum'),
+        Discount = $("#Discount"),
+        FeelTime = $("#FeelTime");
+    var selectType = $("select[name='Type']").val();
+    Name.blur(function () {
+        var _old = $(this).val();
+        if (_old.length <= 0) {
+            set_alert_msg(this, "请输入券名称！");
+            return false;
+        }
+        else {
+            clear_alert_msg(this);
+            return true;
+        }
+    });
+    Number.blur(function () {
+        var _old = $(this).val();
+        if (_old.length <= 0) {
+            set_alert_msg(this, "请输生成券的数量！");
+            return false;
+        }
+        else {
+            clear_alert_msg(this);
+            return true;
+        }
+    });
+    ExpiryNum.blur(function () {
+        var _old = $(this).val();
+        if (_old.length <= 0) {
+            set_alert_msg(this, "请输有效期！");
+            return false;
+        }
+        else {
+            clear_alert_msg(this);
+            return true;
+        }
+    });
+
+    if (selectType == 1) {
+
+        Discount.blur(function () {
+            var _old = $(this).val();
+            if (_old.length <= 0) {
+                set_alert_msg(this, "请输有优惠金额！");
+                return false;
+            }
+            else {
+                clear_alert_msg(this);
+                return true;
+            }
+        });
+    }
+    if (selectType == 2) {
+
+        FeelTime.blur(function () {
+            var _old = $(this).val();
+            if (_old.length <= 0) {
+                set_alert_msg(this, "请输体验时长（月）！");
+                return false;
+            }
+            else {
+                clear_alert_msg(this);
+                return true;
+            }
+        });
+    }
+    if (selectType == 3) {
+
+        //
+    }
+ 
+   
+    btnSubmit.click(function () {
+       
+        if (selectType == 1) {
+
+            if (!Name.blur() || !Number.blur() || !ExpiryNum.blur() || !Discount.blur())
+                return;
+        }
+        if (selectType == 2) {
+
+            if (!Name.blur() || !Number.blur() || !ExpiryNum.blur() || !FeelTime.blur())
+                return;
+        }
+        if (selectType == 3) {
+
+            if (!Name.blur() || !Number.blur() || !ExpiryNum.blur())
+                return;
+        }
+
+
+    });
+    //不符合标红提醒
+    function set_alert_msg(object, msg) {
+        $(object).next('span').text(msg).parents(".form-group").addClass("has-error");
+
+    };
+
+    //符合清除提醒
+    function clear_alert_msg(object) {
+        $(object).next('span').text('').parents(".form-group").removeClass("has-error");
+    };
+</script>

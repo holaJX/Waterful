@@ -1,0 +1,197 @@
+﻿@model Waterful.Wechat.ViewModels.CommentVM
+@{
+    ViewData["Title"] = "万得水";
+}
+<div class="evaluation-content content-wrapper">
+    <form asp-action="Send" id="postForm">
+        <input id="Id" name="Id" type="hidden" value="@Model.Id" />
+        <input id="OId" name="OId" type="hidden" value="@Model.OId" />
+
+        <div class="top-content">
+            <div class="user-head"><img src="../../images/pay/user-head.jpg"></div>
+            <div class="user-info">
+                <div class="name-value">
+                    <div class="name">员工：</div>
+                    <div class="value">@Model.Name</div>
+                </div>
+                <div class="name-value">
+                    <div class="name">日期：</div>
+                    <div class="value">@Model.ServiceTime</div>
+                </div>
+                <div class="name-value">
+                    <div class="name">项目：</div>
+                    <div class="value">上门安装、水检测</div>
+                </div>
+            </div>
+        </div>
+        <div class="satisfaction">
+            <div class="satisfaction-name">满 意 度：</div>
+            <div class="satisfaction-star">
+                <input type="hidden" name="star" id="star" value="0">
+                <div class="star">
+                    <div class="divNoDisplay" id="star1"></div>
+                    <div class="divNoDisplay" id="star2"></div>
+                    <div class="divNoDisplay" id="star3"></div>
+                    <div class="divNoDisplay" id="star4"></div>
+                    <div class="divNoDisplay" id="star5"></div>
+                </div>
+            </div>
+        </div>
+        <div class="evaluation-other">
+            <div class="evaluation-other-item">
+                <span>上门是否准时：</span>
+                <div class="other-right">
+                    <input type="hidden" name="isOnTime" id="ontime" value="1" />
+                    <div class="other-right-yes">
+                        <img src="../../images/pay/yes.png" id="ontimeyes" alt="">&nbsp;是
+                    </div>
+                    <div class="other-right-no">
+                        <img src="../../images/pay/no.png" id="ontimeno" alt="">&nbsp;否
+                    </div>
+                </div>
+            </div>
+            <div class="evaluation-other-item">
+                <span>服装是否整齐：</span>
+                <div class="other-right">
+                    <input type="hidden" name="isTidy" id="neat" value="1" />
+                    <div class="other-right-yes">
+                        <img src="../../images/pay/yes.png" id="neatyes" alt="">&nbsp;是
+                    </div>
+                    <div class="other-right-no">
+                        <img src="../../images/pay/no.png" id="neatno" alt="">&nbsp;否
+                    </div>
+                </div>
+            </div>
+            <div class="evaluation-other-item">
+                <span>完工是否整洁：</span>
+                <div class="other-right">
+                    <input type="hidden" name="isClear" id="clean" value="1" />
+                    <div class="other-right-yes">
+                        <img src="../../images/pay/yes.png" id="cleanyes" alt="">&nbsp;是
+                    </div>
+                    <div class="other-right-no">
+                        <img src="../../images/pay/no.png" id="cleanno" alt="">&nbsp;否
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="advice">
+            <p class="title">改进意见&建议</p>
+            <textarea rows="8" id="advice" name="Content" placeholder="请填写您的建议或建议"></textarea>
+        </div>
+        <div class="footer-padding-block"></div>
+        <div class="footer">
+            <a id="btnSubmit" class="buy-btn">确认评价</a>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            var btnSubmit = $("#btnSubmit"),
+                postForm = $('#postForm');
+            btnSubmit.click(function () {
+                showConfirm('是否确认提交？').then(function (data) {
+                    $.ajax({
+                        type: "POST",
+                        url: postForm.prop('action'),
+                        data: postForm.serialize(),
+                        dataType: "json",
+                        beforeSend: function () {
+                            postForm.css({ opacity: 0.7 });
+                            btnSubmit.prop('disabled', true).html('请稍等');
+                        },
+                        success: function (data) {
+                            if (data.err == 1) {
+                                btnSubmit.html('提交成功');
+                                window.location.replace(data.msg);
+                            }
+                            else {
+                                btnSubmit.prop('disabled', false).html('确认评价');
+                                showLoyer(data.msg);
+                            }
+                        },
+                        complete: function () {
+                            postForm.css({ opacity: 1 });
+                        },
+                        error: function (e) {
+                            btnSubmit.prop('disabled', false).html('确认评价');
+                            showLoyer('页面发生错误，请刷新后再试');
+                        }
+                    });
+                });
+            });
+
+            $("#star1").click(function () {
+                $("#star").val(1);
+                $(".satisfaction-star .star").css("background-position", "0px -112px");
+                //showLoyer($("#star").val());
+            });
+
+            $("#star2").click(function () {
+                $("#star").val(2);
+                $(".satisfaction-star .star").css("background-position", "0px -84px");
+                //showLoyer($("#star").val());
+            });
+
+            $("#star3").click(function () {
+                $("#star").val(3);
+                $(".satisfaction-star .star").css("background-position", "0px -56px");
+                //showLoyer($("#star").val());
+            });
+
+            $("#star4").click(function () {
+                $("#star").val(4);
+                $(".satisfaction-star .star").css("background-position", "0px -28px");
+                //showLoyer($("#star").val());
+            });
+
+            $("#star5").click(function () {
+                $("#star").val(5);
+                $(".satisfaction-star .star").css("background-position", "0px 0px");
+                //showLoyer($("#star").val());
+            });
+
+            // 其他
+            // ontime
+            $("#ontimeyes").click(function () {
+                $("#ontime").val(1);
+                $("#ontimeyes").attr("src", "../../images/pay/yes.png");
+                $("#ontimeno").attr("src", "../../images/pay/no.png");
+                //showLoyer($("#ontime").val());
+            });
+            $("#ontimeno").click(function () {
+                $("#ontime").val(0);
+                $("#ontimeyes").attr("src", "../../images/pay/no.png");
+                $("#ontimeno").attr("src", "../../images/pay/yes.png");
+                //showLoyer($("#ontime").val());
+            });
+            //neat
+            $("#neatyes").click(function () {
+                $("#neat").val(1);
+                $("#neatyes").attr("src", "../../images/pay/yes.png");
+                $("#neatno").attr("src", "../../images/pay/no.png");
+                //showLoyer($("#neat").val());
+            });
+            $("#neatno").click(function () {
+                $("#neat").val(0);
+                $("#neatyes").attr("src", "../../images/pay/no.png");
+                $("#neatno").attr("src", "../../images/pay/yes.png");
+                //showLoyer($("#neat").val());
+            });
+            // clean
+            $("#cleanyes").click(function () {
+                $("#clean").val(1);
+                $("#cleanyes").attr("src", "../../images/pay/yes.png");
+                $("#cleanno").attr("src", "../../images/pay/no.png");
+                //showLoyer($("#clean").val());
+            });
+            $("#cleanno").click(function () {
+                $("#clean").val(0);
+                $("#cleanyes").attr("src", "../../images/pay/no.png");
+                $("#cleanno").attr("src", "../../images/pay/yes.png");
+                //showLoyer($("#clean").val());
+            });
+        })
+    </script>
+}

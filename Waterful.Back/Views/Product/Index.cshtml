@@ -1,0 +1,133 @@
+﻿
+@using X.PagedList;
+@using X.PagedList.Mvc.Core
+@model StaticPagedList<Waterful.Core.Models.Product>
+
+@{
+    ViewData["Title"] = "商城管理-商品售卖";
+    ViewData["MenuId"] = "0101";
+    var categoryId = ViewData["categoryId"] ?? "";
+}
+<section class="content-header">
+    <h1>
+        商城管理-商品售卖
+    </h1>
+</section>
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header">
+
+            <a asp-action="Create" class="btn btn-primary" style="width: 80px;">添加</a>
+            <div class="box-tools">
+                <form class="input-group" style="width: 300px;">
+                    <select class="form-control" id="select_id" name="categoryId">
+                        <option value="0">全部</option>
+                        <option value="1"> 净水系统</option>
+                        <option value="2"> 饮水系统</option>
+                        <option value="3">沐浴器</option>
+                    </select>
+                    @* <input type="text" name="table_search" class="form-control pull-right" placeholder="输入姓名查询" value="" />*@
+                    <input type="hidden" id="hidden_id" value="@categoryId" />
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        @*<a asp-action="" asp-route-categoryId="@categoryId"  class="btn btn-default">导出<i class="fa fa-fw fa-file-excel-o"></i></a>*@
+                        <a href="#" onclick="GetExportData()" class="btn btn-default">导出<i class="fa fa-fw fa-file-excel-o"></i></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="box-body table-responsive">
+            <table class="table table-hover table-striped" style="min-width:1100px;">
+                <thead>
+                    <tr>
+                        <th>
+                            编号
+                        </th>
+                        <th style="width:200px;">
+                            商品名称
+                        </th>
+                        <th>
+                            价格
+                        </th>
+                        <th>
+                            原价
+                        </th>
+                        <th>
+                            后续滤芯
+                        </th>
+                        <th>
+                            安装费
+                        </th>
+                        <th>
+                            库存
+                        </th>
+
+                        <th>
+                            产品状态
+                        </th>
+
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Name</td>
+                            <td>@item.Price</td>
+                            <td>@item.OriginalPrice</td>
+                            <td>@item.FilterPrice</td>
+                            <td>@item.InstallFee</td>
+                            <td>
+                                @if (item.Storage == 0)
+                                {<span class="text-red">0</span>  }
+                                else
+                                {
+                                    <span class="text-success">@item.Storage</span>
+                                }
+
+                            </td>
+                            <td>@(item.Status == 1 ? "启用" : "停用")</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm">编辑</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">查看</a>
+
+                                @if (item.Status == 1)
+                                {
+                                    <button class="btn btn-danger btn-sm" disabled>删除</button>
+                                }
+                                else
+                                {
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">删除</a>
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer">
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { p = page }))
+        </div>
+    </div>
+</section>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#select_id").val($("#hidden_id").val());
+
+
+    });
+    function GetExportData() {
+        var categoryId =@categoryId;// $("#hidden_id").val();
+        window.location.href = "/Product/GetExportData?categoryId=" + categoryId + "&t=" + Math.random();
+        //$.get(url, function (result) {
+        //    if (result)
+        //        window.open(result);
+        //});
+    }
+</script>

@@ -1,0 +1,206 @@
+﻿@model Waterful.Core.Models.Order
+@{
+    ViewData["Title"] = "订单信息";
+    var Customer = (Waterful.Core.Models.Customer)ViewData["Customer"];
+    var Aftersale = (IQueryable<Waterful.Core.Models.Aftersale>)ViewData["Aftersales"];
+    var OrderItem = (Waterful.Core.Models.OrderItem)ViewData["OrderItem"];
+    bool isRemark = string.IsNullOrWhiteSpace((ViewData["isRemark"] ?? "").ToString());
+    var statusText = new string[] { "已派遣", "已服务", "已评价" };
+    var statusOrderText = Waterful.Core.Enums.OrderEnum.OrderDic();
+    int type = 0;
+    if (Model.OrderType == 1)
+    {
+        if (Model.ParentId == 0)
+        {
+            type = 1;
+        }
+        else
+        {
+            type = 5;
+        }
+    }
+    else if (Model.OrderType == 2)
+    {
+        if (Model.ParentId == 0)
+        {
+            type = 2;
+        }
+        else
+        {
+            type = 6;
+        }
+    }
+    ViewData["MenuId"] = "020" + type;
+}
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th style="width:100px;">订单信息:</th>
+                        <td>
+                            <div class="col">
+                                <div class="col-md-4">订单编号：@Model.OrderNo</div>
+                                <div class="col-md-4">下单时间：@Model.CreateTime</div>
+                                <div class="col-md-4">订单状态：@statusOrderText[Model.Status]</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>购买信息</th>
+                        <td>
+                            <div class="col">
+                                @if (OrderItem != null)
+                                {
+                                    <div class="col-md-4">商品名称：@OrderItem.Name</div>
+                                }
+                                <div class="col-md-4">用户Id：@Model.CustomerId</div>
+                                <div class="col-md-4">使用券：@Model.CouponNo</div>
+
+
+
+                                <div class="col-md-4">收货姓名：@Model.Name</div>
+                                <div class="col-md-4">收货电话：@Model.Mobile</div>
+                                <div class="col-md-4">收货地址：@Model.Street</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>费用信息</th>
+                        <td>
+                            <div class="col">
+                                <div class="col-md-4">总金额：@Model.Total</div>
+                                <div class="col-md-4">付款金额：@Model.Amount</div>
+                                <div class="col-md-4">抵扣金额：@Model.DiscountAmount</div>
+                                <div class="col-md-4">押金：@Model.DepositAmount</div>
+                                <div class="col-md-4">安装费：@Model.InstallAmount</div>
+
+                                <div class="col-md-4">滤芯价格：@Model.FilterPrice</div>
+                                <div class="col-md-4">后续服务次数：@Model.ServiceNumber</div>
+                                @if (Model.NextPayTime != null)
+                                {
+                                    <div class="col-md-4">下次付款时间：@(((DateTime)Model.NextPayTime).ToString("yyyy-MM-dd"))</div>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>订单备注</th>
+                        <td>
+                            <form asp-action="Remark" class="form-horizontal">
+                                <div class="box-body">
+                                    <input id="Id" name="Id" type="hidden" value="@Model.Id" />
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <textarea asp-for="Remark" class="form-control" rows="3"></textarea>
+                                            <span asp-validation-for="Remark" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" id="btnSubmit" class="btn btn-primary" style="width: 80px;">保存备注</button>
+                                    @if (!isRemark)
+                                    {
+                                        <span class="text-danger">备注保存成功</span>
+                                    }
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">服务信息</h3>
+            <br />
+            <br />
+            <a asp-action="CreateAftersale" asp-route-id="@Model.Id" class="btn btn-primary" id="sbservice" style="width: 80px;">添加服务</a>
+        </div>
+        <div class="box-body table-responsive">
+            @if (Aftersale.Count() > 0)
+            {
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>服务Id</th>
+                            <th>员工姓名</th>
+                            <th>工号</th>
+                            <th>状态</th>
+                            <th>服务时间</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Aftersale)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Worker.Name</td>
+                                <td>@item.Worker.WorkerNo</td>
+                                <td>@statusText[item.Status]</td>
+                                <td>@item.ServiceTime.ToString("yyyy-MM-dd")</td>
+                                <td>
+                                    <a hrefpost="/Order/Sms/@item.Id" class="btn btn-info btn-sm sms">发送通知短信</a>
+                                    <a asp-action="EditAftersale" asp-route-id="@Model.Id" asp-route-AftersaleId="@item.Id" class="btn btn-info btn-sm">编辑</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <lable>暂无数据</lable>
+            }
+        </div>
+    </div>
+    <a asp-action="Index" asp-route-id="@type" class="btn btn-primary" style="width: 80px;">返回</a>
+</section>
+@section Scripts{
+    <script src="~/lib/layer/build/layer.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#sbservice').click(function () { if ('0' == '@Model.Status') { alert('未支付订单不可派遣服务'); return false; } });
+            $('.sms').click(function () {
+                var btnSubmit = $(this);
+                if (!confirm('是否确认发送？')) {
+                    return false;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: btnSubmit.attr('hrefpost'),
+                    data: '',
+                    dataType: "json",
+                    beforeSend: function () {
+                        btnSubmit.css({ opacity: 0.7 });
+                        btnSubmit.prop('disabled', true).html('请稍等');
+                    },
+                    success: function (data) {
+                        if (data.err == 1) {
+                            btnSubmit.html('发送成功');
+                            //window.location.replace(data.msg);
+                        }
+                        else {
+                            btnSubmit.prop('disabled', false).html('发送失败');
+                            alert(data.msg);
+                        }
+                    },
+                    complete: function () {
+                        btnSubmit.css({ opacity: 1 });
+                    },
+                    error: function (e) {
+                        //btnSubmit.prop('disabled', false).html('确认评价');
+                        alert('页面发生错误，请刷新后再试！');
+                    }
+                });
+                return false;
+            });
+        })
+    </script>
+}

@@ -1,0 +1,186 @@
+﻿@model List<Waterful.Wechat.ViewModels.AddressVM>
+@{
+    ViewData["Title"] = "管理收货地址";
+    var sort = ViewData["sort"];
+}
+
+
+<div class="user-info-content">
+    @if (Model.Any())
+    {
+        foreach (Waterful.Wechat.ViewModels.AddressVM item in Model)
+        {
+        <div class="list">
+            <div class="list-name">
+                <span class="title spacing">收货人：</span>
+                <span class="value">@item.Name</span>
+            </div>
+            <div class="list-name">
+                <span class="title">收货地址：</span>
+                <span class="value">@item.Display</span>
+            </div>
+            <div class="list-manage">
+
+                @if (item.Sort == (long)sort)
+                    {
+                    <span class="default active" data-href="@Url.Action("SetDefault", new { Id = item.Id })">
+                        <i class="glyphicon glyphicon-ok-sign"></i>
+                        <span>默认地址</span>
+                    </span>
+                    }
+                    else
+                    {
+                    <span class="default" data-href="@Url.Action("SetDefault", new { Id = item.Id })">
+                        <i class="glyphicon glyphicon-ok-sign"></i>
+                        <span>设为默认</span>
+                    </span>
+                    }
+
+
+
+                <a href="javascrpt:void(0)" data-href="@Url.Action("Delete", new { Id = item.Id })" class="delete">
+                    <img src="../../images/user/delete1.png" alt="">
+                    <span>删除</span>
+                </a>
+                <a href="/Address/Edit/@item.Id" class="edit">
+                    <img src="../../images/user/edit1.png" alt="">
+                    <span>编辑</span>
+                </a>
+            </div>
+            <div class="line"></div>
+        </div>
+        }
+    }
+    else
+    {
+        <div class="images"><img src="../../images/address-empty.png"></div>
+        <div class="pay-describe-no-b">您暂时还没有地址哦,快去添加~</div>
+    }
+
+
+    @if (Model.Any() && Model.Count >= 5)
+    {
+
+    }
+    else
+    {
+        <div class="footer">
+            <a href="javascript:void();" id="add" class="buy-btn">添加新地址</a>
+        </div>
+    }
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        var back = window.location.href.indexOf("=back");
+        var reffer = GetQueryString("referrer");
+        $(function () {
+            var list = $(".list");
+            $('.list-name').click(function () {
+                list.removeClass("active");
+                $(this).parent().addClass("active");
+                if (back > 0) {
+
+                    var currentSpan = $(this).parent(".list").find(".list-manage .default");
+                    if (currentSpan) {
+                        SetDefault(currentSpan);
+                    }
+                }
+                });
+
+            $("#add").click( function () {
+                if (back > 0) {
+                    // var reffer = encodeURIComponent( window.document.referrer);
+                    location.href = "@Url.Action("Create", new { target = "back" })" + "&referrer=" + encodeURIComponent( reffer);
+                } else {
+                    location.href ="@Url.Action("Create")" ;
+                 }
+
+            });
+            if (back > 0) {
+                $(".list-manage  .edit").each(function (i, o) {
+                    // var reffer = window.document.referrer;
+                    var url = $(o).attr("href") + "?target=back" + "&referrer=" + encodeURIComponent( reffer);
+                    $(o).attr("href", url);
+                });
+            }
+
+            var span = $(".list-manage .default");
+            span.click(function () {
+                var c = $(this).attr("class").indexOf("active");
+                if (c > 0) { return false; }
+                SetDefault($(this));
+
+            });
+
+            function SetDefault(obj) {
+                span.removeClass("active").find("span").text("设为默认");
+                obj.addClass("active").find("span").text("默认地址");
+                //$_obj = $(o);
+                $.ajax({
+                    type: "post",
+                    url: $(obj).data('href'),
+                    success: function (res) {
+                        showLoyer(res.msg);
+                        if (res.err) {
+                            if (back > 0)
+                            {
+                                var ref = window.location.href.indexOf("referrer");
+                                if (ref > 0) {
+                                    var jum = decodeURIComponent(reffer);
+                                    window.location.replace(jum);
+                                } else
+                                {
+                                    self.location = document.referrer;
+                                }
+
+                            }
+
+                        } else {
+                          //  console.log(res.data);
+                        }
+
+                    },
+                    error: function (e) {
+                        alert('页面发生错误，请刷新后再试！');
+                    }
+                });
+            }
+
+        });
+        $('.delete').click(function () {
+            $_obj = $(this);
+            showConfirm('确认删除？').then(function (data) {
+                if (data) {
+                    $.ajax({
+                        type: "post",
+                        url: $_obj.data('href'),
+                        success: function (res) {
+                            showLoyer(res.msg);
+                            if (res.err) {
+                                window.location.replace("/Address/Index");
+                            } else {
+                                console.log(res.data);
+                            }
+
+                        },
+                        error: function (e) {
+                            alert('页面发生错误，请刷新后再试！');
+                        }
+                    });
+                }
+            });
+
+
+
+
+
+
+        });
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+    </script>
+
+}

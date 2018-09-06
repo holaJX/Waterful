@@ -1,0 +1,311 @@
+﻿@model Waterful.Wechat.ViewModels.OrderDetailsVM
+@{
+    ViewData["Title"] = "订单详情";
+    var product = Model.OrderItems.FirstOrDefault().Product;
+    var paymentType = product.PaymentType;
+    int[] discount = ViewData["SecondYearDiscount"] as int[];
+    string[] levels = { "", "一般全户", "尊贵全户", "顶级全户" };
+    var left = 0;//剩余租期
+    var isHalfYear = bool.Parse(ViewData["IsHalfYear"].ToString());
+    var isSecondYear = bool.Parse(ViewData["IsSecondYear"].ToString());
+    if (Model.NextPayTime != null)
+    {
+        left = (Model.NextPayTime.Value.Year - DateTime.Now.Year) * 12 + (Model.NextPayTime.Value.Month - DateTime.Now.Month);
+        left = left < 0 ? 0 : left;
+    }
+}
+<div id="paydiv"></div>
+<div class="order-detail-content content-wrapper" id="orderdiv">
+    <div class="top">
+        <div class="row">
+            <div class="line">
+                <span class="title">下单时间：</span>
+                <span class="value">@(Model.CreateTime.ToString("yyyy年M月d日 HH:mm")) </span>
+            </div>
+            <div class="line">
+                <span class="title">订单编号：</span>
+                <span class="value">@Model.OrderNo</span>
+            </div>
+            <div class="line">
+                <span class="title spacing">收货人：</span>
+                <span class="value">@Model.Name  @Model.Mobile</span>
+            </div>
+            <div class="line">
+                <span class="title">收货地址：</span>
+                <span class="value address">@Model.Street</span>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="order-item">
+            @if (paymentType == Waterful.Core.Enums.PaymentEnum.Rent && Model.Status == 1 && Model.NextPayTime != null)
+            {
+                <div class="top-content">租用剩余时间：@(left)个月</div>
+            }
+            <div class="item-middle-content">
+                <div class="left">
+                    <img src="@product.ImageUrl" alt="">
+                    @if (product.CategoryId == Waterful.Core.Enums.CategoryEnum.ClearWater)
+                    {
+                        <div class="user-type-bg green">
+                            <p>@levels[product.Level]</p>
+                        </div>
+                    }
+                </div>
+                <div class="right">
+                    <div class="title">@product.Name</div>
+                    <div class="payed">@(Model.Status == 1 ? "已付" : "应付")@(paymentType != Waterful.Core.Enums.PaymentEnum.Rent ? "款" : isHalfYear ? "半年租金" : "租金")：&yen;@(Model.Amount)</div>
+                    @if (isHalfYear)
+                    {
+                        <div class="payed-two">剩余：&yen;@((product.Price - product.DepositAmount - product.InstallFee) / 2)未支付</div>
+                    }
+                </div>
+            </div>
+            <div class="server">
+                @if (Model.Status == 1)
+                {
+                    <div class="server-count@(Model.ServiceNumber == 0 ? "2" : "")">剩余@(Model.ServiceNumber)次滤芯服务</div>
+                    if (product.CategoryId == Waterful.Core.Enums.CategoryEnum.ClearWater && product.PaymentType == Waterful.Core.Enums.PaymentEnum.Rent)
+                    {
+                        <div class="server-count two">送1次更换饮水机服务</div>
+                    }
+                }
+            </div>
+            @if (Model.Aftersales.Any())
+            {
+                foreach (var item in Model.Aftersales)
+                {
+                    <div class="server-time-content @(item.Status<2?"no-border":"")">
+                        <div class="line">
+                            <span class="title">服务时间：</span>
+                            <span class="value">@item.ServiceTime.ToString("yyyy-MM-dd HH:mm:ss")</span>
+                        </div>
+                        <div class="line2">
+                            <span class="title">服务内容：</span>
+                            <ul class="list">
+                                <li>1.设备保养</li>
+                                <li>2.闪电发货＆售后</li>
+                                <li>3.免费水质检测</li>
+                                <li>4.免费上门服务</li>
+                            </ul>
+                        </div>
+                    </div>
+                    @if (item.Status < 2)
+                    {
+                        <div class="user-evaluate">
+                            <a href="#" data-id="@item.Id" data-status="@item.Status" class="evaluate-btn">@(item.Status == 0 ? "确认服务" : "评价")</a>
+                        </div>
+                    }
+                }
+            }
+            @if (Model.Status == 0 && !Model.Close)// 未支付
+            {
+                <div class="pay-button">
+                    <a href="javascript:void(0);" id="btnCancel" class="cancel">取消订单</a>
+                    <a href="javascript:void(0);" id="btnPay" class="go-pay">去支付</a>
+                </div>
+            }
+            else if (Model.Status == 1 && !Model.Close)// 已支付
+            {
+                if (paymentType == Waterful.Core.Enums.PaymentEnum.Buy && Model.ServiceNumber == 0)// 购买-续费服务
+                {
+                    <div class="footer">
+                        <a href="javascript:void(0);" id="btnRenew" class="buy-btn">续费</a>
+                    </div>
+                }
+                else if (paymentType == Waterful.Core.Enums.PaymentEnum.Rent)// 出租 && Model.NextPayTime != null && left == 0
+                {
+                    if (isHalfYear)// 半年付-支付剩余租金
+                    {
+                        <div class="footer">
+                            <a href="javascript:void(0);" id="btnRenew" class="buy-btn">去支付</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="rent-button">
+                            @if (isSecondYear) //已付完且时间快到期-续租
+                            {
+                                <div class="user-info-desc">
+                                    <div class="rent-desc">*租用第二年，年付优惠@(discount[product.Level - 1])元</div>
+                                </div>
+                            }
+                            <div class="rent-button2">
+                                <a href="javascript:void(0);" id="btnClose" class="no-rent-btn">不续租</a>
+                                <a href="javascript:void(0);" id="btnRenew" class="go-rent-btn">续租</a>
+                            </div>
+                        </div>
+
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+
+        //续费
+        $("#btnRenew").click(function () {
+             window.location.replace('@Url.Content("~/Order/PayDetails")?id=@(Model.Id)&isrenew=true');
+        });
+
+
+        //去支付
+        $("#btnPay").click(function () {
+            pay('@Model.Id');
+            @*window.location.replace('@Url.Action("Pay", "WeiXinPay")/@Model.Id');*@
+        });
+
+         //关闭订单
+        $("#btnClose").click(function () {
+            if ($("#btnClose").attr('class').indexOf("disabled") != -1) {
+                return;
+            };
+            showConfirm('确认不续租吗？</br>稍后客服会和您联系，将上门回收</br>净水系统，并退还押金').then(function (data) {
+                if (data) {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Content("~/Order/CloseOrder")',
+                        data: {id:'@Model.Id'},
+                        dataType: "json",
+                        beforeSend: function () {
+                            $(".order-detail-content").css({ opacity: 0.7 });
+                            $("#btnClose").addClass('disabled');
+                        },
+                        success: function (res) {
+                            if (res.err) {
+                                window.location.replace('@Url.Content("~/Order/Index")');
+                            }
+                            else {
+                                showLoyer(res.msg);
+                                $("#btnClose").removeClass('disabled');
+                            }
+                        },
+                        complete: function () {
+                            $(".order-detail-content").css({ opacity: 1 });
+                            $("#btnClose").removeClass('disabled');
+                        },
+                        error: function (e) {
+                            showLoyer('页面发生错误，请刷新后再试！');
+                        }
+                    });
+                }
+            });
+        });
+
+        //取消订单
+        $("#btnCancel").click(function () {
+            if ($("#btnCancel").attr('class').indexOf("disabled") != -1) {
+                return;
+            };
+            showConfirm('订单未支付，确认要取消吗？').then(function (data) {
+                if (data) {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Content("~/Order/CancelOrder")',
+                        data: {id:'@Model.Id'},
+                        dataType: "json",
+                        beforeSend: function () {
+                            $(".order-detail-content").css({ opacity: 0.7 });
+                            $("#btnCancel").addClass('disabled');
+                        },
+                        success: function (res) {
+                            if (res.err) {
+                                window.location.replace('@Url.Content("~/Order/Index")');
+                            }
+                            else {
+                                showLoyer(res.msg);
+                                $("#btnCancel").removeClass('disabled');
+                            }
+                        },
+                        complete: function () {
+                            $(".order-detail-content").css({ opacity: 1 });
+                            $("#btnCancel").removeClass('disabled');
+                        },
+                        error: function (e) {
+                            showLoyer('页面发生错误，请刷新后再试！');
+                        }
+                    });
+                }
+            });
+        });
+
+        // 确认服务/评价
+        $(".evaluate-btn").each(function () {
+            $(this).click(function () {
+                if ($(this).attr('class').indexOf("disabled") != -1) {
+                    return;
+                };
+
+                var id = $(this).attr("data-id"),
+                    status = $(this).attr("data-status"),
+                    url = '@Url.Content("~/Comment/Index")?oid=@(Model.Id)&aid=' + id,
+                    button = $(this);
+
+                // 确认服务
+                if (status == 0) {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Content("~/Comment/Confirm")',
+                        data: { id: id },
+                        dataType: "json",
+                        beforeSend: function () {
+                            $(".order-detail-content").css({ opacity: 0.7 });
+                            $(".evaluate-btn").addClass('disabled');
+                        },
+                        success: function (res) {
+                            if (res.err) {
+                                showConfirm('服务已确认！是否立即进行评价？').then(function (data) {
+                                    if (data) {
+                                        window.location.replace(url);
+                                    } else {
+                                        location.reload();
+                                        //button.html("评价");
+                                        //button.attr("data-status", "1");
+                                    }
+                                });
+                            }
+                            else {
+                                showLoyer(res.msg);
+                            }
+                        },
+                        complete: function () {
+                            $(".order-detail-content").css({ opacity: 1 });
+                            $(".evaluate-btn").removeClass('disabled');
+                        },
+                        error: function (e) {
+                            showLoyer('页面发生错误，请刷新后再试！');
+                        }
+                    });
+
+                }
+                // 评价
+                else if (status == 1) {
+                    window.location.replace(url);
+                }
+            });
+        });
+
+        function pay(oid) {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("Pay","WeixinPay")?rqt=ajax&id=' + oid,
+                dataType: "html",
+                beforeSend: function () {
+                    $('#orderdiv').css({ opacity: 0.7 });
+                },
+                success: function (data) {
+                    $('#orderdiv').hide();
+                    $('#paydiv').html(data);
+                },
+                complete: function () {
+                    $('#orderdiv').css({ opacity: 1 });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    showLoyer('页面发生错误，请刷新后再试！\rXMLHttpRequest.readyState:' + XMLHttpRequest.readyState + '\rXMLHttpRequest.status:' + XMLHttpRequest.status + '\textStatus:' + textStatus + '\errorThrown:' + errorThrown);
+                }
+            });
+        }
+    </script>
+}

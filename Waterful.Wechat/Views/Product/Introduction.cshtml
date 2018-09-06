@@ -1,0 +1,11 @@
+﻿@model Waterful.Wechat.ViewModels.ProductDetailsVM
+@{
+    string[] titles = { "净水系统", "饮水器", "沐浴器" };
+    ViewData["Title"] = titles[(int)Model.CategoryId - 1] + "服务介绍";
+}
+<div class="content-wrapper introduction">
+    <h1>万得水@(titles[(int)Model.CategoryId - 1])</h1>
+    <div class="text-stage">
+        @Html.Raw(Model.Service)
+    </div>
+</div>

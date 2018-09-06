@@ -1,0 +1,147 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core
+@model StaticPagedList<Waterful.Core.Models.Order>
+
+@{
+    ViewData["Title"] = "订单管理";
+    var begin = ViewData["begin"] ?? "";
+    var end = ViewData["end"] ?? "";
+    var mobile = ViewData["mobile"] ?? "";
+    var name = ViewData["name"] ?? "";
+    var status = ViewData["status"] ?? "";
+    var type = ViewData["type"] ?? "";
+    var statusText = Waterful.Core.Enums.OrderEnum.OrderDic();
+    ViewData["MenuId"] = "020"+ type;
+}
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3>@ViewData["Title"]</h3>
+            <form asp-action="Index" method="get" id="postForm">
+                <div class='col-md-3'>
+                    <div class="form-group">
+                        <div class='input-group date' id='begin'>
+                            <input type='text' class="form-control" name="begin" value="@begin" placeholder="开始时间" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-md-3'>
+                    <div class="form-group">
+                        <div class='input-group date' id='end'>
+                            <input type='text' class="form-control" name="end" value="@end" placeholder="结束时间" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3"><div class="form-group"><input type="text" name="mobile" class="form-control" placeholder="收货手机" value="@mobile" /></div></div>
+                <div class="col-md-3"><div class="form-group"><input type="text" name="name" class="form-control" placeholder="收货姓名" value="@name" /></div></div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select class="form-control" id="statusList" name="status">
+                            <option value="-10">全部</option>
+                            <option value="-1">取消订单</option>
+                            <option value="0">未支付</option>
+                            <option value="1">已支付</option>
+                            <option value="2">完成</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> 查询</button>
+                    <a id="sbexcel" class="btn btn-default"><i class="fa fa-file-excel-o"></i> 导出</a>
+                </div>
+            </form>
+        </div>
+        <div class="box-body table-responsive">
+            <table class="table table-hover table-striped" style="min-width:1200px;">
+                <thead>
+                    <tr>
+                        <th>订单号</th>
+                        <th style="width:200px;">产品名称</th>
+                        <th>下单时间</th>
+                        <th>收货姓名</th>
+                        <th>收货手机</th>
+                        <th>总金额</th>
+                        <th>付款金额</th>
+                        <th>安装费</th>
+                        <th>后续次数</th>
+                        <th>状态</th>
+                        <th>关闭</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.OrderNo</td>
+                            <td>
+                                @if (item.OrderItems.FirstOrDefault() != null)
+                                { @item.OrderItems.FirstOrDefault().Name}
+                            </td>
+                            <td>@item.CreateTime</td>
+                            <td>@item.Name</td>
+                            <td>@item.Mobile</td>
+                            <td>@item.Total</td>
+                            <td>@item.Amount</td>
+                            <td>@item.InstallAmount</td>
+                            <td>@item.ServiceNumber</td>
+                            <td>@statusText[item.Status]</td>
+                            <td>@(item.Close?"已关闭":"")</td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">查看</a>
+                                @if (item.Status == 0)
+                                {
+                                    <a asp-action="Cancel" asp-route-id="@item.Id" class="btn btn-info btn-sm">取消订单</a>
+                                }
+                                @if (item.Status == -1)
+                                {
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-info btn-sm">删除</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer">
+            @Html.PagedListPager((IPagedList)Model, p => Url.Action("Index", new { p = p, begin = begin, end = end, mobile = mobile, name = name, status = status }))
+        </div>
+    </div>
+</section>
+@section scripts{
+    <link href="~/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="~/lib/moment/min/moment.min.js"></script>
+    <script src="~/lib/moment/locale/zh-cn.js"></script>
+    <script src="~/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+        $(function () {
+            //select默认值
+            $("#statusList").get(0).value = '@status';
+
+            $('#begin').datetimepicker({
+                sideBySide: true,
+                format: 'YYYY-MM-DD HH:mm'
+            });
+            $('#end').datetimepicker({
+                sideBySide: true,
+                format: 'YYYY-MM-DD HH:mm'
+            });
+
+            //导出excel
+            $("#sbexcel").click(function () {
+                var q = $('#postForm').serialize();
+                var url = '/Excel?' + q + '&type=@type';
+                console.info(url);
+                window.location.href = url;
+                //window.open(url);
+            });
+        });
+    </script>
+}

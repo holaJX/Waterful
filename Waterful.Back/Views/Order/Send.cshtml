@@ -1,0 +1,66 @@
+﻿@model Waterful.Back.ViewModels.OrderSendVM
+@{
+    ViewData["Title"] = "添加上门服务信息";
+    ViewData["MenuId"] = "0200";
+}
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+        <form asp-action="Send" class="form-horizontal">
+            <div class="box-body table-responsive">
+                <div class='col-md-4'>
+                    <input id="errorInfo" type="hidden" value="@ViewBag.ErrorInfo" />
+                    <input id="Id" name="Id" type="hidden" value="@Model.Id" />
+                    <div class="form-group">
+                        <div class='input-group date' id='time'>
+                            <input type='text' class="form-control" name="time" placeholder="服务时间" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>选择安装人员</label>
+                        <select name="WorkerId" multiple="" class="form-control">
+                            @foreach (var item in Model.Workers)
+                            {
+                                <option value="@item.Id">@item.WorkerNo @item.Name</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" id="btnSubmit" class="btn btn-primary" style="width: 80px;">保存</button>
+                <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary" style="width: 80px;">返回</a>
+            </div>
+        </form>
+    </div>
+
+    @*<a asp-action="Index" class="btn btn-primary" style="width: 80px;">返回</a>*@
+</section>
+
+@section scripts{
+    <script src="~/lib/layer/build/layer.js"></script>
+
+    <link href="~/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="~/lib/moment/min/moment.min.js"></script>
+    <script src="~/lib/moment/locale/zh-cn.js"></script>
+    <script src="~/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+        $(function () {
+            $('#time').datetimepicker({
+                sideBySide: true,
+                format: 'YYYY-MM-DD HH:mm'
+            });
+            //显示服务端验证的错误信息
+            if ($("#errorInfo").val()) {
+                layer.tips($("#errorInfo").val(), "#btnSubmit");
+            };
+        });
+    </script>
+}

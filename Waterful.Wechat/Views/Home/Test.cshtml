@@ -1,0 +1,30 @@
+
+@{
+    ViewData["Title"] = "Test";
+}
+<div id="testdiv"></div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Pay","WeixinPay",new { id=113, rqt="ajax"})',
+            dataType: "html",
+            //beforeSend: function () {
+            //    postForm.css({ opacity: 0.7 });
+            //    btnSubmit.prop('disabled', true).html('登录中')
+            //},
+            success: function (data) {
+
+                $('#testdiv').html(data);
+            },
+            //complete: function () {
+            //    postForm.css({ opacity: 1 });
+            //},
+            error: function (jqXHR, textStatus, errorThrown) {
+                showLoyer('页面发生错误，请刷新后再试！\rXMLHttpRequest.readyState:' + XMLHttpRequest.readyState + '\rXMLHttpRequest.status:' + XMLHttpRequest.status + '\textStatus:' + textStatus + '\errorThrown:' + errorThrown);
+            }
+        });
+
+    </script>
+}

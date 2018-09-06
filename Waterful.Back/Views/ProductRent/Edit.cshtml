@@ -1,0 +1,383 @@
+﻿@model Waterful.Core.Models.Product
+
+@{
+    ViewData["Title"] = "编辑租用商品";
+    ViewData["MenuId"] = "0102";
+    var categoryId = ViewData["categoryid"] ?? "";
+    var level = ViewData["level"] ?? "";
+    var status = ViewData["status"] ?? "";
+}
+<section class="content">
+    <input type="hidden" id="categoryid" value="@categoryId" />
+    <input type="hidden" id="level" value="@level" />
+    <input type="hidden" id="status" value="@status" />
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">编辑租用商品</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form class="form-horizontal" asp-action="Edit">
+            <div class="box-body">
+                <input id="errorInfo" type="hidden" value="@ViewBag.ErrorInfo" />
+                <div class="form-group">
+                    <label class="col-md-2 control-label">项目编号</label>
+                    <div class="col-md-10">
+                        <input id="Id" readonly asp-for="Id" class="form-control" />
+                        @*<span asp-validation-for="ProductNo" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*项目名称</label>
+                    <div class="col-md-10">
+                        <input id="Name" asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*租金</label>
+                    <div class="col-md-10">
+                        <input id="Price" type="number" asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*押金</label>
+                    <div class="col-md-10">
+                        <input id="DepositAmount" type="number" min="0.0" asp-for="DepositAmount" class="form-control" />
+
+                        <span asp-validation-for="DepositAmount" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="col-md-2 control-label">*后续滤芯</label>
+                    <div class="col-md-10">
+                        <input id="FilterPrice" type="number" asp-for="FilterPrice" class="form-control" />
+                        <span asp-validation-for="FilterPrice" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*安装费</label>
+                    <div class="col-md-10">
+                        <input asp-for="InstallFee" type="number" class="form-control" />
+                        <span asp-validation-for="InstallFee" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*库存</label>
+                    <div class="col-md-10">
+                        <input id="Storage" type="number" asp-for="Storage" class="form-control" />
+                        <span asp-validation-for="Storage" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">商品类型</label>
+                    <div class="col-md-10">
+                        <select  class="form-control" id="select_id" name="CategoryId">
+                            <option value="1"> 净水系统</option>
+                            <option disabled value="2"> 饮水系统</option>
+                            <option disabled value="3">沐浴器</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">商品等级(可选)</label>
+                    <div class="col-md-10">
+                        <select disabled class="form-control" id="selectLevel_id" name="Level">
+                            <option value="1">一般全户</option>
+                            <option value="2">尊贵全户</option>
+                            <option value="3">顶级全户</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label">商品状态</label>
+                    <div class="col-md-10">
+                        启用 <input id="onRadio" class="aui-radio" type="radio" name="Status" value="1"> &nbsp&nbsp&nbsp
+                        停用 <input id="offRadio" class="aui-radio" type="radio" name="Status" value="0">
+
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">视频路径</label>
+                    <div class="col-md-10">
+                        <input asp-for="VideoSrc" class="form-control" />
+                        @*<span asp-validation-for="VideoSrc" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">服务介绍</label>
+                    <div class="col-md-10">
+                        <input asp-for="Service" class="form-control" />
+                        <span asp-validation-for="Service" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">概要</label>
+                    <div class="col-md-10">
+                        <input asp-for="Summary" class="form-control" />
+                        <span asp-validation-for="Summary" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">产品描述</label>
+                    <div class="col-md-10">
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">备注</label>
+                    <div class="col-md-10">
+                        <input asp-for="Remark" class="form-control" />
+                        <span asp-validation-for="Remark" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"></label>
+                    <input type="hidden" id="ImageUrl" name="ImageUrl" value="" />
+                    <div class="col-md-6" id="pic">
+                        <img src="@Model.ImageUrl" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">图片</label>
+                    <div class="col-md-6">
+                        <span class="btn btn-success fileinput-button">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>选择文件</span>
+                            <!-- The file input field used as target for the file upload widget -->
+                            <input id="fileupload" type="file" name="files" accept="image/jpg,image/jpeg,image/png">
+                        </span>
+                        <!-- The global progress bar -->
+                        <div id="progress" class="progress" style="display:none;">
+                            <div class="progress-bar progress-bar-success"></div>
+                        </div>
+                        <!-- The container for the uploaded files -->
+                        <div id="files" class="files"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" id="btnSubmit" class="btn btn-primary" style="width: 80px;">保存</button>
+                <a asp-action="Index" class="btn btn-primary" style="width: 80px;">返回</a>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+</section>
+@section scripts{
+    <script src="~/lib/layer/build/layer.js"></script>
+    <link href="~/lib/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet" />
+    <script src="~/lib/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="~/lib/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+    <script src="~/lib/jquery-file-upload/js/jquery.fileupload.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#fileupload').fileupload({
+                url: "/File/UploadProductImage",
+                //dataType: 'json',
+                done: function (e, data) {
+                    console.log('done1', data);
+                },
+                add: function (e, data) {
+                    console.log('add1', data);
+                    $('#progress').show();
+                    data.submit();
+                },
+                progress: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#progress .progress-bar').css('width', progress + '%');
+                },
+                success: function (res, status) {
+                    console.log('success1', res);
+                    if (res && res.success) {
+                        $('#progress').hide();
+                        $('#progress div').css('width', '0%');
+                        //
+                        $('#pic').html('<img src="' + res.url + '" />');
+                        $('#ImageUrl').val(res.url);
+                    } else {
+                        alert(res.msg);
+                    }
+                },
+                error: function (error) {
+                    console.log('error1', error);
+                    $('#progress').hide();
+                    $('#progress div').css('width', '0%');
+                }
+            });
+            if ($("#errorInfo").val()) {
+                layer.tips($("#errorInfo").val(), "#btnSubmit");
+            };
+        });
+
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("select[name='CategoryId']").change(function () {
+                var selected_value = $(this).val();
+                if (selected_value == 1) {
+                    $("#selectLevel_id").show();
+                } else {
+                    $("#selectLevel_id").hide();
+                }
+            });
+
+            if ($("#errorInfo").val()) {
+                layer.tips($("#errorInfo").val(), "#btnSubmit");
+            };
+        });
+
+    </script>
+
+    <script type="text/javascript">
+
+        var btnSubmit = $("#btnSubmit"),
+            Name = $("#Name"),
+            Price = $("#Price"),
+            DepositAmount = $('#DepositAmount'),
+            FilterPrice = $("#FilterPrice"),
+            InstallFee = $("#InstallFee"),
+            Storage = $('#Storage');
+
+        var isName = false, isNameLength = false,
+            isPrice = false,
+            isDepositAmount = false,
+            isFilterPrice = false,
+            isInstallFee = false,
+            isStorage = false;
+        Name.blur(function () {
+            var _old = $(this).val();
+            if (_old.length <= 0) {
+                set_alert_msg(this, "请输入项目名称！");
+                isName = false;
+            } if (_old.length > 50) {
+                set_alert_msg(this, "项目名称长度不能超过50字符！");
+                isNameLength = false;
+            }
+            else {
+                clear_alert_msg(this);
+                isName = true;
+                isNameLength = true;
+            }
+        });
+
+        Price.blur(function () {
+            var _old = $(this).val();
+            if (_old.length <= 0) {
+                set_alert_msg(this, "请输入正确的租金！");
+                isPrice = false;
+            }
+            else {
+                clear_alert_msg(this);
+                isPrice = true;
+            }
+        });
+
+        DepositAmount.blur(function () {
+            var _old = $(this).val();
+            if (_old.length <= 0) {
+                set_alert_msg(this, "请输入正确的押金！");
+                isDepositAmount = false;
+            }
+            else {
+                clear_alert_msg(this);
+                isDepositAmount = true;
+            }
+        });
+        FilterPrice.blur(function () {
+            var _old = $(this).val();
+            if (_old.length <= 0) {
+                set_alert_msg(this, "请输入正确的滤芯价！");
+                isFilterPrice = false;
+            }
+            else {
+                clear_alert_msg(this);
+                isFilterPrice = true;
+            }
+        });
+        InstallFee.blur(function () {
+            var _old = $(this).val();
+            if (_old.length <= 0) {
+                set_alert_msg(this, "请输入正确的安装费！");
+                isInstallFee = false;
+            }
+            else {
+                clear_alert_msg(this);
+                isInstallFee = true;
+            }
+        });
+        Storage.blur(function () {
+            var _old = $(this).val();
+            if (_old.length <= 0) {
+                set_alert_msg(this, "请输入正确的库存！");
+                isStorage = false;
+            }
+            else {
+                clear_alert_msg(this);
+                isStorage = true;
+            }
+        });
+        btnSubmit.click(function () {
+            Name.blur();
+            Price.blur();
+            DepositAmount.blur();
+            FilterPrice.blur();
+            InstallFee.blur();
+            Storage.blur();
+            if (!isName) {
+                set_alert_msg(Name, "请输入项目名称！");
+            }
+            if (!isNameLength) {
+                set_alert_msg(Name, "项目名称长度不能超过30字符！");
+            }
+            if (!isPrice) {
+                set_alert_msg(Price, "请输入正确的租金！");
+            }
+            if (!isFilterPrice) {
+                set_alert_msg(FilterPrice, "请输入正确的滤芯价！");
+            }
+            if (!isDepositAmount) {
+                set_alert_msg(DepositAmount, "请输入正确的押金！");
+            } if (!isInstallFee) {
+                set_alert_msg(InstallFee, "请输入正确的安装费！");
+
+            } if (!isStorage) {
+                set_alert_msg(Storage, "请输入正确的库存！");
+            }
+            if (isName && isNameLength && isPrice && isDepositAmount && isFilterPrice && isInstallFee && isStorage) {
+
+            } else {
+                return false;
+            }
+
+        });
+        //不符合标红提醒
+        function set_alert_msg(object, msg) {
+            $(object).next('span').text(msg).parents(".form-group").addClass("has-error");
+
+        };
+
+        //符合清除提醒
+        function clear_alert_msg(object) {
+            $(object).next('span').text('').parents(".form-group").removeClass("has-error");
+        };
+    </script>
+<script type="text/javascript">
+        $(function () {
+            $("#select_id").val($("#categoryid").val());
+            $("#selectLevel_id").val($("#level").val());
+            var $val = $("#status").val();
+            if ($val == 1) {
+                $('#onRadio').attr("checked", 'checked');
+            } else {
+                $('#offRadio').attr("checked", 'checked');
+            }
+        });
+
+</script>
+}

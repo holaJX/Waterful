@@ -1,0 +1,130 @@
+@model Waterful.Wechat.ViewModels.ShareDetailVM
+@{
+    ViewData["Title"] = "我的爱心";
+}
+@if (Model.ShareNum == 0)
+{
+    <div class="pay-content content-wrapper">
+        <div class="images"><img src="~/images/lover-empty.png"></div>
+        <div class="pay-describe-no-b">您还没有小伙伴来关注哦~</div>
+        <div class="pay-describe-no-b"><a href="@Url.Action("Index")">快去分享~</a> </div>
+    </div>
+}
+else if (!Model.IsAgent)
+{
+    <div class="my-love-content content-wrapper">
+        <div class="title">
+            <span class="button-left active" data-tp="0">已帮助 @Model.ShareNum 人关注</span>
+            <span class="button-right" data-tp="1">已帮助 @Model.PayNum 人用好水</span>
+        </div>
+        <div class="user-list" id="sharelist">
+
+        </div>
+    </div>
+}
+else
+{
+    <div class="my-love-content content-wrapper">
+        <div class="title">
+            <span class="button-left active" data-tp="0">已帮助 @Model.ShareNum 人关注</span>
+            <span class="button-middle" data-tp="1">已帮助 @Model.PayNum 人用好水</span>
+            <span class="button-right" data-tp="2">我的提成</span>
+        </div>
+        <div class="user-list" id="sharelist">
+        </div>
+    </div>
+
+}
+<script id="tpl_share" type="text/x-handlebars-template">
+    <ul class="lovers">
+        {{#each this}}
+        <li>{{this}}</li>
+        {{/each}}
+    </ul>
+</script>
+<script id="tpl_share_income" type="text/x-handlebars-template">
+    <div class="list-top">
+        <p>我的提成总金额：<span>@Model.Total.ToString("C")</span></p>
+        <p>未结算金额：<span>@Model.Amount.ToString("C")</span></p>
+    </div>
+    {{#each this}}
+    <div class="list">
+        <div class="list-content-top">
+            <div class="time">{{createTime}}</div>
+            <div class=" {{show status}}">{{status}}</div>
+        </div>
+        <div class="share-success-count">分享成交1单</div>
+        <div class="deal-price">成交金额：<span>{{orderAmount}}</span></div>
+        <div class="my-commission {{show status}}">我的提成：<span>{{orderAmount}} × {{rate}} = {{amount}}</span></div>
+        <div class="line"></div>
+    </div>
+    {{/each}}
+</script>
+@section Scripts{
+    <script src="~/lib/handlebars/handlebars.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //加载模板
+            $template = Handlebars.compile($("#tpl_share").html());
+            $templateT = Handlebars.compile($("#tpl_share_income").html());
+
+            $sharelist = $('#sharelist');
+            $title = $('.content-wrapper .title span');
+            $cid = 0;
+
+            //缓存
+            $arr = {};
+
+            //初始数据
+            getDate(0);
+
+            //点击事件
+            $title.click(function () {
+                $_obj = $(this);
+                if ($_obj.data('tp') != $cid) {
+                    $title.removeClass('active');
+                    $cid = $_obj.addClass('active').data('tp');
+
+                    if ($arr[$cid] == null) {
+                        getDate($cid);
+                    } else {
+                        $sharelist.html($arr[$cid]);
+                    }
+                }
+            });
+            //数据加载
+            function getDate(tp) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetDetail")',
+                    data: { 'ShareType': tp,'pageIndex': 1},
+                    dataType: "json",
+                    beforeSend: function () {
+                        $('.content-wrapper').css({ opacity: 0.7 });
+                    },
+                    success: function (data) {
+                        $html = tp < 2 ? $template(data) : $templateT(data);
+                        $sharelist.html($html);
+                        $arr[$cid] = $html;
+                    },
+                    complete: function () {
+                        $('.content-wrapper').css({ opacity: 1 });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        showLoyer('系统繁忙,请稍后尝试。' + textStatus);
+                      //alert('页面加载失败，请刷新后再试！');
+                    }
+                });
+            }
+
+            Handlebars.registerHelper("show", function (val) {
+                if (val=='未结算') {
+                    return "redFontClass";
+                } else {
+                    return "";
+                }
+            });
+        });
+
+    </script>
+}

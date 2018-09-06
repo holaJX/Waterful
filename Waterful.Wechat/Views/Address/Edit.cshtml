@@ -1,0 +1,118 @@
+﻿@model Waterful.Wechat.ViewModels.AddressVM
+@{
+    ViewData["Title"] = "地址修改";
+}
+<form>
+    <div class="add-address-content content-wrapper">
+        <input type="hidden" value="@Model.AreaId" id="hidden_id" />
+        <div class="item-input">
+            <div class="list-item">
+                <div class="input-left">收货人</div>
+                <input type="text" class="input" id="name" value="@Model.Name" placeholder="请输入收货人">
+            </div>
+            <div class="list-item">
+                <div class="input-left">联系电话</div>
+                <input type="tel" class="input" placeholder="请输入联系电话" maxlength="11" value="@Model.Mobile" id="phone">
+            </div>
+            <div class="list-item">
+                <div class="input-left">收货地址</div>
+                <select name="city" id="city">
+                    <option value="">请选择</option>
+                    <option value="1">普陀区</option>
+                    <option value="2">长宁区</option>
+                    <option value="3">静安区</option>
+                    <option value="4">徐汇区</option>
+                    <option value="5">黄浦区</option>
+                    <option value="6">浦东区</option>
+                </select>
+            </div>
+            <div class="address-detail">
+                <textarea rows="5" id="addressDetail" placeholder="请填写详细地址，不少于5个字">@Model.Street</textarea>
+            </div>
+            <div class="footer">
+                <a type="submit" id="submitForm" class="buy-btn">保存并使用</a>
+            </div>
+        </div>
+    </div>
+
+</form>
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#city").val($("#hidden_id").val())
+            $("#submitForm").click(function () {
+                var msg = "";
+                var name = $("#name").val();
+                var phone = $("#phone").val();
+                var city = $("#city").val();
+                var addressDetail = $("#addressDetail").val();
+                var checkText = "上海市" + $("#city").find("option:selected").text()
+                if (name === "") {
+                    msg = "请输入收货人";
+                    showLoyer(msg);
+                    return false;
+                }
+                else if (phone === "") {
+                    msg = "请输入联系电话";
+                    showLoyer(msg);
+                    return false;
+                }
+                else if (city === "") {
+                    msg = "请选择城市";
+                    showLoyer(msg);
+                    return false;
+                }
+                else if (addressDetail === "") {
+                    msg = "请输入详细地址";
+                    showLoyer(msg);
+                    return false;
+                }
+                if (!phone.match(/^(\+86)?1[3,4,5,7,8](\d{9})$/)) {
+                    msg = "请输入正确的联系电话";
+                    showLoyer(msg);
+                    return false;
+                }
+                if (addressDetail.length < 5) {
+                    msg = "详细地址不少于5个字";
+                    showLoyer(msg);
+                    return false;
+                }
+                //  showLoyer("验证通过");
+                //提交数据
+                var back = window.location.href.indexOf("=back");
+                var ref = window.location.href.indexOf("referrer");
+                var data = { Id:@Model.Id, Name: name, Mobile: phone, AreaId: city, Street: addressDetail, Display: checkText };
+              $.ajax({
+                  type: "post",
+                  data: data,
+                  url: "/Address/Edit",
+                  success: function (res) {
+                      showLoyer(res.msg);
+                      if (res.err) {
+                          if (back > 0) {
+                              var jump = encodeURIComponent( GetQueryString("referrer"));
+                              window.location.replace( "/Address/Index?target=back&referrer=" + jump);
+                          } else {
+                              window.location.replace("/Address/Index");
+                          }
+                      } else {
+                          console.log(res.data);
+                      }
+
+                  },
+                  error: function (e) {
+                      alert('页面发生错误，请刷新后再试！');
+                  }
+              });
+
+          });
+
+
+          function GetQueryString(name) {
+              var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+              var r = window.location.search.substr(1).match(reg);
+              if (r != null) return unescape(r[2]); return null;
+          }
+      })
+    </script>
+}

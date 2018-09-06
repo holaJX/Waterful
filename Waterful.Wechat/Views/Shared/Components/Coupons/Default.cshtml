@@ -1,0 +1,71 @@
+﻿@model List<Waterful.Core.Models.Coupon>
+@{
+    Layout = null;
+}
+
+<div class="offline-coupon">
+    <div class="desc-name">券编码</div>
+    <div class="input-coupon">
+        <input type="text" class="error-success" name="coupon_number" id="coupon_number" placeholder="请输入券编码" />
+    </div>
+    <div class="input-value-remove">
+        <span><a href="#"><img id="reset" src="" alt="" /></a></span>
+    </div>
+</div>
+
+<div class="coupons" id="coupons_choose">
+    <div class="coupons-decs">优惠券</div>
+    @if (!Model.Any())
+    {
+        <div class="no-coupons-desc">
+            无可用券
+        </div>
+    }
+    else if (Model.Count() <= 3)
+    {
+        <div class="coupons-list">
+            <ul class="list" id="coupons_list">
+                @foreach (var item in Model)
+                {
+                    <li value="@item.Id" data-discount="@item.Discount" data-type="@((int)item.Type)" data-feeltime="@item.FeelTime">@item.Name</li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="coupons-choose">
+            <div class="no-coupons-desc" style="color:black">
+                <span id="coupon-selected">选择优惠券</span>  <i class="icon"><img src="../../images/icon/right-arrow.png" alt="" /></i>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- 弹出层 -->
+<div class="modal-temp" id="duy_modal">
+    <div class="pay-modal">
+        <div class="modal-header">
+            <span class="close2">关闭</span>
+            <span class="title">可用优惠券</span>
+            <span class="close" id="model_close" onclick="sumbitChoose()">关闭</span>
+        </div>
+        <div class="modal-body">
+            <div class="choose-box">
+                <ul class="coupons-content coupons-type">
+                    @foreach (var item in Model)
+                    {
+                        <li value="@item.Id" data-discount="@item.Discount" data-type="@((int)item.Type)" data-feeltime="@item.FeelTime">@item.Name</li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="modal-padding-block"></div>
+        <div class="footer">
+            <a href="javascript:void(0);" class="buy-btn" id="close_model" onclick="sumbitChoose()">
+                确定
+            </a>
+        </div>
+    </div>
+</div>
+<!-- 弹出层结束 -->

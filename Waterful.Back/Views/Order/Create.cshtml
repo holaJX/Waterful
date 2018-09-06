@@ -1,0 +1,202 @@
+﻿@model Waterful.Core.Models.Order
+
+@{
+    ViewData["Title"] = "Create";
+    ViewData["MenuId"] = "0200";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Order</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="PayNotify" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PayNotify" class="form-control" />
+                <span asp-validation-for="PayNotify" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PayTime" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PayTime" class="form-control" />
+                <span asp-validation-for="PayTime" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CustomerId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CustomerId" class="form-control" />
+                <span asp-validation-for="CustomerId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="OrderNo" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="OrderNo" class="form-control" />
+                <span asp-validation-for="OrderNo" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Channel" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Channel" class="form-control" />
+                <span asp-validation-for="Channel" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Total" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Total" class="form-control" />
+                <span asp-validation-for="Total" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Amount" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DiscountAmount" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DiscountAmount" class="form-control" />
+                <span asp-validation-for="DiscountAmount" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DepositAmount" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DepositAmount" class="form-control" />
+                <span asp-validation-for="DepositAmount" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="InstallAmount" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="InstallAmount" class="form-control" />
+                <span asp-validation-for="InstallAmount" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Name" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Mobile" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Mobile" class="form-control" />
+                <span asp-validation-for="Mobile" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Street" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Street" class="form-control" />
+                <span asp-validation-for="Street" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CouponNo" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CouponNo" class="form-control" />
+                <span asp-validation-for="CouponNo" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Status" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ParentId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ParentId" class="form-control" />
+                <span asp-validation-for="ParentId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="FilterPrice" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="FilterPrice" class="form-control" />
+                <span asp-validation-for="FilterPrice" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ServiceNumber" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ServiceNumber" class="form-control" />
+                <span asp-validation-for="ServiceNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="Close" />
+                    <label asp-for="Close"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CloseTime" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CloseTime" class="form-control" />
+                <span asp-validation-for="CloseTime" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Remark" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Remark" class="form-control" />
+                <span asp-validation-for="Remark" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CreateTime" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CreateTime" class="form-control" />
+                <span asp-validation-for="CreateTime" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="UpdateTime" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="UpdateTime" class="form-control" />
+                <span asp-validation-for="UpdateTime" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="NextPayTime" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="NextPayTime" class="form-control" />
+                <span asp-validation-for="NextPayTime" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Month" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Month" class="form-control" />
+                <span asp-validation-for="Month" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

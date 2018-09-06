@@ -1,0 +1,507 @@
+﻿@model Waterful.Wechat.ViewModels.ProductDetailsVM
+@{
+    string[] titles = { "净水系统", "饮水器", "沐浴器" };
+    string[] levelDes = { "一般全户", "尊贵全户", "顶级全户" };
+
+    ViewData["Title"] = "产品详情";
+    if ((int)Model.CategoryId > 0)
+    {
+        ViewData["Title"] = titles[(int)Model.CategoryId - 1];
+    }
+    int times = 1;
+    if(Model.PaymentType == PaymentEnum.Rent)
+    {
+        times = Model.Level == 3 ? 6 : 3;
+    }
+}
+@using Waterful.Core.Enums;
+@if (!string.IsNullOrEmpty(Model.Name))
+{
+    <div class="swiper-container swiper-container-horizontal">
+        <div class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
+            @if (string.IsNullOrEmpty(Model.Banner))
+            {
+                @:<div class="swiper-slide"><img src="../../images/buy-detail.jpg" alt=""></div>
+            }
+            else
+            {
+                foreach (var item in Model.Banner.Split(','))
+                {
+                    @:<div class="swiper-slide"><img src="@item" alt=""></div>
+                }
+            }
+        </div>
+        <div class="swiper-pagination"><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+    </div>
+    <div class="content-wrapper buy-detail">
+        <div class="p-row product-name">
+            @Model.Name
+        </div>
+        <div class="p-row product-price">
+            <span class="now">¥@Model.Price</span>
+            @if (Model.PaymentType == PaymentEnum.Buy)
+            {
+                <span class="old">原价¥@Model.OriginalPrice</span>
+            }
+            <div class="desc product-summary">
+                @Model.Summary
+            </div>
+        </div>
+        <div class="p-row product-activity">
+            @if (Model.CategoryId == CategoryEnum.ClearWater)
+            {
+                <span class="spec">活动</span>
+                <span class="desc">
+                    @if (Model.PaymentType == PaymentEnum.Buy)
+                    {
+                        @:下单即送一个滤芯(*一个滤芯可使用6个月)
+                    }
+                    @if (Model.PaymentType == PaymentEnum.Rent)
+                    {
+                        @:下单即送饮水器(*可使用12个月)
+                    }
+                </span>
+            }
+        </div>
+        @if (Model.PaymentType == PaymentEnum.Rent)
+        {
+            <div class="p-row bullshit">
+                *租用套餐滤芯在2年内用完
+            </div>
+        }
+        <div class="p-row product-choose" id="product_choose">
+            选择服务规格
+            <span class="desc">
+                已选
+                @if (Model.CategoryId == CategoryEnum.ClearWater)
+                {
+                    <span id="choosed_package">@levelDes[Model.Level - 1]</span>
+                }
+                <span id="choosed_times">@(Model.PaymentType == PaymentEnum.Rent ? 3 : 1)</span>次服务
+            </span>
+            <i class="icon"><img src="../../images/icon/right-arrow.png" alt=""></i>
+        </div>
+        <div class="product-introduction" onclick="window.location.href='@Url.Action("Introduction", "Product", new { id = Model.Id })'">
+            服务介绍
+            <i class="icon"><img src="../../images/icon/right-arrow.png" alt=""></i>
+        </div>
+        <div class="p-row product-server">
+            <ul class="list">
+                <li><img class="icon" src="../../images/gou-icon.png" alt="">设备保养</li>
+                <li><img class="icon" src="../../images/gou-icon.png" alt="">闪电发货&售后</li>
+                <li><img class="icon" src="../../images/gou-icon.png" alt="">免费水质检测</li>
+                <li><img class="icon" src="../../images/gou-icon.png" alt="">免费上门服务</li>
+            </ul>
+        </div>
+        <div class="p-row product-area">
+            <div class="title">
+                安装范围
+            </div>
+            <ul class="area">
+                <li>普陀区</li>
+                <li>长宁区</li>
+                <li>静安区</li>
+                <li>徐汇区</li>
+                <li>黄埔区</li>
+                <li>浦东区</li>
+            </ul>
+        </div>
+        <div class="product-detail">
+            <div class="video-wrap" id="video_wrap">
+                <video class="video" id="video" src="@Model.VideoSrc" loop  preload="auto">
+                    您的浏览器不支持视频播放，请更新浏览器。
+                </video>
+                <div class="mask" id="mask">
+                    <img class="bg-img" src="../../images/video.png" alt="">
+                    <img class="play-icon" src="../../images/icon/video-play.png" alt="播放">
+                </div>
+            </div>
+            <div class="img-wrap">
+                @if (!string.IsNullOrEmpty(Model.DescImg))
+                {
+                    foreach (var item in Model.DescImg.Split(','))
+                    {
+                        <img src="@item" alt="">
+                    }
+                }
+            </div>
+
+        </div>
+
+    </div>
+    <div class="footer-padding-block"></div>
+    <form id="postForm" onsubmit="return false;" action="@Url.Action("CheckStatus","Order")" method="post">
+        <div class="footer">
+            @Html.AntiForgeryToken()
+            <input id="productId" type="hidden" name="productId" value="@Model.Id">
+            <input id="times" type="hidden" name="times" value="@times">
+            <a href="javascript:void(0);" type="submit" id="btnBuy" class="buy-btn">立即@(Model.PaymentType == PaymentEnum.Buy ? "购买" : "租用")</a>
+        </div>
+    </form>
+}
+else
+{
+    <div class="pay-content content-wrapper">
+        <div class="images"><img src="../../images/pay/my-empty-pay.png"></div>
+        <div class="pay-describe-no-b">未找到产品信息！</div>
+    </div>
+}
+
+<!--弹出层开始-->
+<div class="modal-temp" id="duy_modal">
+    <div class="buy-modal">
+        <div class="close-ico">
+            <img src="../../images/icon/close.png" alt="" onclick="closeModal()">
+        </div>
+        <div class="scroll">
+            <div class="modal-header buy-detail">
+                <div class="p-row img-text">
+                    <div class="img">
+                        <img src="@Model.ImageUrl" alt="">
+                    </div>
+                    <div class="text product-price">
+                        <span id="price" class="now">¥@Model.Price</span>
+                        @if (Model.PaymentType == PaymentEnum.Buy)
+                        {
+                            <span id="oriPrice" class="old">原价¥@Model.OriginalPrice</span>
+                        }
+                        <div class="desc product-summary">
+                            @Model.Summary
+                        </div>
+                    </div>
+                </div>
+                <div class="p-row product-name">
+                    @Model.Name
+                </div>
+                <div class="p-row product-activity">
+                    @if (Model.CategoryId == CategoryEnum.ClearWater)
+                    {
+                        <span class="spec">活动</span>
+                        <span class="desc">
+                            @if (Model.PaymentType == PaymentEnum.Buy)
+                            {
+                                @:下单即送一个滤芯(*一个滤芯可使用6个月)
+                    }
+                            @if (Model.PaymentType == PaymentEnum.Rent)
+                            {
+                                @:下单即送饮水器(*可使用12个月)
+                    }
+                        </span>
+                    }
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="levelChoose" class="choose-box">
+                    @if (Model.CategoryId == CategoryEnum.ClearWater)
+                    {
+                        <span class="title">增值服务套餐</span>
+                        if (Model.PaymentType == PaymentEnum.Rent)
+                        {
+                            <ul class="content package margin-big">
+                                <li data-level="1" data-package="一般全户" data-times="3" class="choosed">一般全户<span>含3次更换滤芯及水检服务</span></li>
+                                <li data-level="2" data-package="尊贵全户" data-times="3">尊贵全户<span>含3次更换滤芯及水检服务</span></li>
+                                <li data-level="3" data-package="顶级全户" data-times="6">顶级全户<span>含6次更换滤芯及水检服务</span></li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="content package margin-small">
+                                <li data-level="1" class="choosed">一般全户</li>
+                                <li data-level="2">尊贵全户</li>
+                                <li data-level="3">顶级全户</li>
+                            </ul>
+                        }
+                    }
+                </div>
+                @if (Model.PaymentType != PaymentEnum.Rent)
+            {
+                    <div class="choose-box">
+                        <span class="title">后续更换滤芯及水检服务次数</span>
+                        <span id="filterPrice" class="desc filterPrice">@(Model.FilterPrice)元/次</span>
+                        @if (Model.CategoryId != CategoryEnum.ClearWater)
+                        {
+                            <div>*一个滤芯可使用@(Model.CategoryId == CategoryEnum.DrinkWater ? "12" : "3")个月</div>
+                        }
+                        <ul class="content times margin-big">
+                            <li data-times="1" class="choosed">1</li>
+                            <li data-times="3">3</li>
+                            <li data-times="6">6</li>
+                            <li data-times="9">9</li>
+                            <li data-times="12">12</li>
+                            <li data-times="15">15</li>
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+        @*<div class="modal-padding-block"></div>*@
+        <div class="footer">
+            <a href="javascript:void(0);" class="buy-btn" onclick="sumbitChoose()">
+                确定
+            </a>
+        </div>
+    </div>
+</div>
+<!--弹出层结束-->
+
+@section Scripts {
+    <script type="text/javascript">
+        var levels = null,
+            times = $("#times"),
+            btnBuy = $("#btnBuy"),
+            postForm = $("#postForm"),
+            productId = $("#productId"),
+            noLogin = @((ViewData["NoLogin"] + "").ToLower()),
+            loginUrl = '@ViewData["LoginUrl"]',
+            payUrl = '@Url.Action("PayDetails", "Order")',
+            getServicesUrl = '@Url.Action("GetServices", "Product")';
+
+        btnBuy.click(function () {
+            if (btnBuy.attr('class').indexOf("disabled") != -1) {
+                return;
+            };
+            if (noLogin) {
+                var param = encodeURIComponent('?productId=' + productId.val() + '&times=' + times.val());
+                window.location.href = loginUrl + param;
+                return;
+            }
+            if (!validate()) {
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: postForm.prop('action'),
+                data: postForm.serialize(),
+                dataType: "json",
+                beforeSend: function () {
+                    btnBuy.addClass('disabled');
+                    $('body').css({ opacity: 0.7 });
+                },
+                success: function (res) {
+                    if (res.err) {
+                        window.location.replace(payUrl + "?productId=" + productId.val() +"&times=" + times.val());
+                    }
+                    else {
+                        btnBuy.removeClass('disabled');
+                        showLoyer(res.msg);
+                    }
+                },
+                error: function (e) {
+                    btnBuy.removeClass('disabled');
+                    $('body').css({ opacity: 1 });
+                    showLoyer('页面发生错误，请刷新后再试！');
+                }
+            });
+        });
+        function validate() {
+            if (productId.val().length == 0 && times.val().length == 0) {
+                showLoyer("请选择产品类别!");
+                return false;
+            }
+            return true;
+        }
+
+
+        var service = {
+            level: @Model.Level,
+            times:@times,
+            levelTitle: '@(Html.Raw(Model.Level > 0 ? levelDes[Model.Level - 1]:""))',
+            timesTitle: '@times',
+            levelChange: function () {
+                    var lv;
+                $(levels).each(function (i) {
+                        if (levels[i].level == service.level) {
+                            lv = levels[i];
+                        }
+                    });
+                if (!lv) {
+                    showLoyer('未配置的套餐！'); return;
+                }
+                $(".now").each(function () {//单价
+                    $(this).text("¥" + lv.price.toFixed(2));
+                });
+                $(".old").each(function () {//原价
+                    $(this).text("¥" + lv.originalPrice.toFixed(2));
+                });
+                $(".product-summary").each(function () {//概要
+                    $(this).text(lv.summary);
+                });
+                $(".product-name").each(function () {//名称
+                    $(this).text(lv.name);
+                });
+                $(".filterPrice").each(function () {
+                    $(this).text(lv.filterPrice.toFixed(2) + '元/次');
+                });
+
+                $('.times li.choosed').removeClass('choosed');
+                $($('.buy-layer .times li')[0]).addClass('choosed');
+                $($('.buy-modal .times li')[0]).addClass('choosed');
+
+                this.times = 1
+                this.timesTitle = '1';
+                if ('@Model.PaymentType' == 'Rent') {
+                    var n = this.level == 3 ? 6:3;
+                    this.times = n;
+                    this.timesTitle = n;
+                }
+
+                this.timesChange();
+
+            },
+            timesChange: function () {
+                var lv;
+                $(levels).each(function (i) {
+                    if (levels[i].level == service.level) {
+                        lv = levels[i];
+                    }
+                });
+                if (!lv) {
+                    showLoyer('未配置的套餐！'); return;
+                }
+                if ('@Model.PaymentType' != 'Rent') {
+                    var newPrice = ((this.times - 1) * lv.filterPrice + lv.price).toFixed(2);
+
+                    $(".now").each(function () {
+                        $(this).text("¥" + newPrice);
+                    });
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            if ('@string.IsNullOrEmpty(Model.VideoSrc)' === 'True') {
+                $("#video_wrap").hide();
+            }
+            $.ajax({
+                type: "GET",
+                url: getServicesUrl + '?categoryId=@((int)Model.CategoryId)&paymentType=@((int)Model.PaymentType)',
+                success: function (res) {
+                    if (res.err) {
+                        levels = res.data;
+                    }
+                    else {
+                        levels = null;
+                    }
+                },
+                error: function (e) {
+                    showLoyer('页面发生错误，请刷新后再试！');
+                }
+            });
+        });
+
+        // 轮播图配置
+        var mySwiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+        });
+
+        // 视频播放
+        var video = document.getElementById("video");
+        var video_wrap = document.getElementById("video_wrap");
+        video_wrap.onclick = function () {
+            if (video.paused) {
+                video.play();
+                $('#video').css("opacity", 1);
+                $('#mask').hide();
+            } else {
+                video.pause();
+                $('#video').css("opacity", 0);
+                $('#mask').show();
+            }
+        };
+    // 商品规格选择-弹出层
+    var product_choose = document.getElementById("product_choose");
+    var duy_modal = document.getElementById("duy_modal");
+    product_choose.onclick = function () {
+        layer.open({
+            type: 1,
+                className: 'buy-layer',
+                content: duy_modal.innerHTML,
+                shadeClose: true,
+                anim: 'up',
+                style: 'position:fixed; bottom:0; left:0; width: 100%; border:none;',
+                success: function () {
+                var _package = $('.buy-layer .package li');
+                var _times = $('.buy-layer .times li');
+                _package.each(function () {
+                    var liNode = $(this);
+                    liNode.hide();
+                        $(levels).each(function () {
+                        if (this.level == liNode.data('level')) {
+                            liNode.show();
+                        }
+                    });
+                    if (liNode.text() === service.levelTitle) {
+                            $('.buy-layer .package li.choosed').removeClass('choosed');
+                        liNode.addClass('choosed');
+                    }
+                    if(liNode.data('package') && liNode.data('times'))
+                    {
+                        if (liNode.text().indexOf(service.levelTitle) != -1) {
+                                $('.buy-layer .package li.choosed').removeClass('choosed');
+                            liNode.addClass('choosed');
+                        }
+                    }
+                        $(this).click(function () {
+                            $('.buy-layer .package li.choosed').removeClass('choosed');
+                        liNode.addClass('choosed');
+                        service.level = liNode.data('level');
+                        service.levelTitle = liNode.text();
+                        if(liNode.data('package') && liNode.data('times'))
+                        {
+                            service.levelTitle = liNode.data('package');
+                            service.timesTitle = liNode.data('times');
+                        }
+                        service.levelChange();
+                    })
+                    });
+                _times.each(function () {
+                    var liNode = $(this);
+                    if (liNode.text() === service.timesTitle) {
+                            $('.buy-layer .times li.choosed').removeClass('choosed');
+                        liNode.addClass('choosed');
+                    }
+
+                        $(this).click(function () {
+                            $('.buy-layer .times li.choosed').removeClass('choosed');
+                        liNode.addClass('choosed');
+                        service.times = liNode.data('times');
+                        service.timesTitle = liNode.text();
+                        service.timesChange();
+                    })
+                });
+                // 禁止body滑动
+                document.body.style.overflow = 'hidden';
+                }
+            ,
+            end: function () {
+                // 允许body滑动
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+    };
+    function sumbitChoose() {
+        var lv;
+            $(levels).each(function (i) {
+            if (levels[i].level == service.level) {
+                lv = levels[i];
+            }
+        });
+        if (!lv) {
+            showLoyer('未配置的套餐！'); return;
+        }
+
+            $('#choosed_package').text(service.levelTitle);
+            $('#choosed_times').text(service.timesTitle);
+        productId.val(lv.id);
+        times.val(service.times);
+        layer.closeAll();
+        }
+        function closeModal() {
+            layer.closeAll();
+        }
+    </script>
+}
+
+
+

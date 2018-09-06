@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "分享统计 - 天使用户 - 分享详情";
+    ViewData["MenuId"] = "0601";
+    List<string> list1 = (List<string>)ViewData["list1"];
+    List<string> list2 = (List<string>)ViewData["list2"];
+    List<Waterful.Core.Models.Commission> list3 = (List<Waterful.Core.Models.Commission>)ViewData["list3"];
+}
+
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+        <div class="box-body table-responsive">
+            <h3>关注人</h3>
+            <br />
+            @foreach (var item in list1)
+            {
+                <a class="btn btn-default">@item</a>
+            }
+            <br />
+            <h3>邀请成功购买人</h3>
+            
+            <br />
+            @foreach (var item in list2)
+            {
+                <a class="btn btn-default">@item</a>
+            }
+        </div>
+    </div>
+    <a asp-action="Index" class="btn btn-primary" style="width: 80px;">返回</a>
+</section>

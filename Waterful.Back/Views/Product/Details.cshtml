@@ -1,0 +1,173 @@
+﻿@model Waterful.Core.Models.Product
+
+@{
+    ViewData["Title"] = "查看商品";
+    ViewData["MenuId"] = "0101";
+    var categoryId = ViewData["categoryid"] ?? "";
+    var level = ViewData["level"] ?? "";
+    var status = ViewData["status"] ?? "";
+}
+<section class="content">
+    <input type="hidden" id="categoryid" value="@categoryId" />
+    <input type="hidden" id="level" value="@level" />
+    <input type="hidden" id="status" value="@status" />
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">查看商品</h3>
+        </div>
+        <form class="form-horizontal" id="form" asp-action="Edit">
+            <div class="box-body">
+                <input id="errorInfo" type="hidden" value="@ViewBag.ErrorInfo" />
+                <div class="form-group">
+                    <label class="col-md-2 control-label">项目编号</label>
+                    <div class="col-md-10">
+                        <input id="Id" readonly asp-for="Id" class="form-control" />
+                        @*<span asp-validation-for="ProductNo" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*项目名称</label>
+                    <div class="col-md-10">
+                        <input id="Name" asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*价格</label>
+                    <div class="col-md-10">
+                        <input id="Price" type="number" asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*原价</label>
+                    <div class="col-md-10">
+                        <input id="OriginalPrice" type="number" min="0.0" asp-for="OriginalPrice" class="form-control" />
+
+                        <span asp-validation-for="OriginalPrice" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="col-md-2 control-label">*后续滤芯</label>
+                    <div class="col-md-10">
+                        <input id="FilterPrice" type="number" asp-for="FilterPrice" class="form-control" />
+                        <span asp-validation-for="FilterPrice" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*安装费</label>
+                    <div class="col-md-10">
+                        <input asp-for="InstallFee" type="number" class="form-control" />
+                        <span asp-validation-for="InstallFee" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">*库存</label>
+                    <div class="col-md-10">
+                        <input id="Storage" type="number" asp-for="Storage" class="form-control" />
+                        <span asp-validation-for="Storage" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">商品类型</label>
+                    <div class="col-md-10">
+                        <select disabled class="form-control" id="select_id" name="CategoryId">
+                            <option value="1"> 净水系统</option>
+                            <option value="2"> 饮水系统</option>
+                            <option value="3">沐浴器</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">商品等级(可选)</label>
+                    <div class="col-md-10">
+                        <select disabled class="form-control" id="selectLevel_id" name="Level">
+                            <option value="1">一般全户</option>
+                            <option value="2">尊贵全户</option>
+                            <option value="3">顶级全户</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label">商品状态</label>
+                    <div class="col-md-10">
+                        启用 <input disabled id="onRadio" class="aui-radio" type="radio" name="Status" value="1"> &nbsp&nbsp&nbsp
+                        停用 <input disabled id="offRadio" class="aui-radio" type="radio" name="Status" value="0">
+
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">视频路径</label>
+                    <div class="col-md-10">
+                        <input asp-for="VideoSrc" class="form-control" />
+                        @*<span asp-validation-for="VideoSrc" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">服务介绍</label>
+                    <div class="col-md-10">
+                        <input asp-for="Service" class="form-control" />
+                        <span asp-validation-for="Service" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">概要</label>
+                    <div class="col-md-10">
+                        <input asp-for="Summary" class="form-control" />
+                        <span asp-validation-for="Summary" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">产品描述</label>
+                    <div class="col-md-10">
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">备注</label>
+                    <div class="col-md-10">
+                        <input asp-for="Remark" class="form-control" />
+                        <span asp-validation-for="Remark" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">图片</label>
+                   
+                    <div class="col-md-6" id="pic">
+                        <img src="@Model.ImageUrl" />
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                @*<button type="submit" id="btnSubmit" class="btn btn-primary" style="width: 80px;">保存</button>*@
+                <a asp-action="Index" class="btn btn-primary" style="width: 80px;">返回</a>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+</section>
+@section scripts{
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#select_id").val($("#categoryid").val());
+            $("#selectLevel_id").val($("#level").val());
+            var $val = $("#status").val();
+            if ($val == 1) {
+                $('#onRadio').attr("checked", 'checked');
+            } else {
+                $('#offRadio').attr("checked", 'checked');
+            }
+            $('input,select,textarea,radio', $('#form')).attr('readonly', true);
+        });
+
+    </script>
+
+
+
+}

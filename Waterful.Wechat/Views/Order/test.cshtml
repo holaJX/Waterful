@@ -1,0 +1,61 @@
+
+<div >
+
+    <div class="top">
+       <div class="row" id="address" onclick="window.location.href='@Url.Action("Index", "Address",new { target="back"})'">
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            initAddress();
+        function initAddress() {
+             var index='@Url.Action("Index", "Address",new { target="back"})';
+
+                $.ajax({
+                    type: "get",
+                    url: '@Url.Action("GetAddress","Address")' + "?m="+ Math.random(),
+                        success: function (res) {
+                            if (res.err) {
+
+                                var html= ' <div class="line">';
+                                html += ' <span class="title spacing">收货人：</span>';
+                                html += '  <span class="value">' + res.data.name + '&emsp;' + res.data.mobile + '</span>';
+                                html += '</div>';
+
+                                html += ' <div class="top-right">';
+                                html += ' <a href=""> <i class="icon"><img src="../../images/icon/right-arrow.png" alt="" /></i></a>';
+                                html += '</div>';
+                                html += '<div class="line">';
+                                html += ' <span class="title">收货地址：</span>';
+                                html += '  <span class="value">' + res.data.display + '</span>';
+                                html += '</div>';
+                                $("#address").append(html);
+                            } else {
+                                var html = '  <div class="top-middle-new-address" id="jumpAdd">';
+                                html += '  <span class="new-address-info">添加收货地址</span>';
+                                html += '  <img src="../../images/icon/right-arrow.png" alt=""/>';
+                                html += '</div>';
+                                $("#address").append(html);
+                                $('#jumpAdd').click(function () {
+                                    window.location.href = index;
+                                });
+                            }
+                     
+                        },
+                        error: function (e) {
+                            alert('页面发生错误，请刷新后再试！');
+                        }
+                    });
+        }
+    })
+    </script>
+}
+<script>
+
+
+</script>

@@ -1,0 +1,120 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Properties\PublishProfiles\FolderProfile.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\css\b2c.css" />
+    <Content Include="wwwroot\css\bootstrapValidator.min.css" />
+    <Content Include="wwwroot\css\common.css" />
+    <Content Include="wwwroot\css\login.css" />
+    <Content Include="wwwroot\css\other.css" />
+    <Content Include="wwwroot\css\pay.css" />
+    <Content Include="wwwroot\css\style.min.css" />
+    <Content Include="wwwroot\css\user-info.css" />
+    <Content Include="wwwroot\images\address-empty.png" />
+    <Content Include="wwwroot\images\buy-detail-1.jpg" />
+    <Content Include="wwwroot\images\buy-detail-3.jpg" />
+    <Content Include="wwwroot\images\buy-detail.jpg" />
+    <Content Include="wwwroot\images\fillters\10sjq.png" />
+    <Content Include="wwwroot\images\fillters\1huq.png" />
+    <Content Include="wwwroot\images\fillters\2xhq.png" />
+    <Content Include="wwwroot\images\fillters\3mxq.png" />
+    <Content Include="wwwroot\images\fillters\4cnq.png" />
+    <Content Include="wwwroot\images\fillters\5jaq.png" />
+    <Content Include="wwwroot\images\fillters\6pdxq.png" />
+    <Content Include="wwwroot\images\fillters\7jsq.png" />
+    <Content Include="wwwroot\images\fillters\8ptq.png" />
+    <Content Include="wwwroot\images\fillters\9jdq.png" />
+    <Content Include="wwwroot\images\gou-icon.png" />
+    <Content Include="wwwroot\images\icon\right-arrow.png" />
+    <Content Include="wwwroot\images\icon\video-play.png" />
+    <Content Include="wwwroot\images\index-1.png" />
+    <Content Include="wwwroot\images\index-2.png" />
+    <Content Include="wwwroot\images\index-3.png" />
+    <Content Include="wwwroot\images\index-4.png" />
+    <Content Include="wwwroot\images\logo.png" />
+    <Content Include="wwwroot\images\logof.png" />
+    <Content Include="wwwroot\images\lover-empty.png" />
+    <Content Include="wwwroot\images\movie.mp4" />
+    <Content Include="wwwroot\images\other\company.jpg" />
+    <Content Include="wwwroot\images\other\erweima.png" />
+    <Content Include="wwwroot\images\other\qu1.png" />
+    <Content Include="wwwroot\images\other\qu2.png" />
+    <Content Include="wwwroot\images\other\qu3.png" />
+    <Content Include="wwwroot\images\pay\address-choose-foot.png" />
+    <Content Include="wwwroot\images\pay\coupon-remove.png" />
+    <Content Include="wwwroot\images\pay\coupon-success.png" />
+    <Content Include="wwwroot\images\pay\error.png" />
+    <Content Include="wwwroot\images\pay\my-empty-pay.png" />
+    <Content Include="wwwroot\images\pay\my-order-bg.png" />
+    <Content Include="wwwroot\images\pay\no.png" />
+    <Content Include="wwwroot\images\pay\product-1.png" />
+    <Content Include="wwwroot\images\pay\refresh.png" />
+    <Content Include="wwwroot\images\pay\satisfaction.png" />
+    <Content Include="wwwroot\images\pay\success.png" />
+    <Content Include="wwwroot\images\pay\user-head.jpg" />
+    <Content Include="wwwroot\images\pay\yes.png" />
+    <Content Include="wwwroot\images\product\shower\7.jpg" />
+    <Content Include="wwwroot\images\product\shower\8.jpg" />
+    <Content Include="wwwroot\images\product\shower\9.jpg" />
+    <Content Include="wwwroot\images\product\shower\details\myq1.jpg" />
+    <Content Include="wwwroot\images\product\shower\details\myq2.jpg" />
+    <Content Include="wwwroot\images\product\shower\details\myq3.jpg" />
+    <Content Include="wwwroot\images\product\shower\myq1.jpg" />
+    <Content Include="wwwroot\images\product\shower\myq2.jpg" />
+    <Content Include="wwwroot\images\product\shower\myq3.jpg" />
+    <Content Include="wwwroot\images\user\delete1.png" />
+    <Content Include="wwwroot\images\user\delete2.png" />
+    <Content Include="wwwroot\images\user\edit1.png" />
+    <Content Include="wwwroot\images\user\edit2.png" />
+    <Content Include="wwwroot\images\video.jpg" />
+    <Content Include="wwwroot\images\wds-qrcode.jpg" />
+    <Content Include="wwwroot\js\layerCommon.js" />
+    <Content Include="wwwroot\lib\layer_mobile\layer.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.1" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.4.0" />
+    <PackageReference Include="Senparc.Weixin.MP" Version="14.4.13" />
+    <PackageReference Include="Senparc.Weixin.MP.CoreMvc" Version="1.2.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Waterful.Core\Waterful.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Views\WeixinPay\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\Order\PayDetails.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+
+</Project>

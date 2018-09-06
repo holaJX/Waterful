@@ -1,0 +1,1174 @@
+.pay-content {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.pay-content .images {
+  padding-top: 30px;
+  text-align: center;
+}
+.pay-content .images img {
+  width: 70%;
+}
+.pay-content .pay-describe {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 600;
+  color: #262626;
+  font-size: 16px;
+}
+.pay-content .pay-describe-no-b {
+  text-align: center;
+  margin-top: 15px;
+  color: #262626;
+  font-size: 16px;
+}
+.pay-content .pay-order-number {
+  margin-top: 15px;
+  font-size: 14px;
+  line-height: 1.43;
+  text-align: center;
+  font-weight: bolder;
+  color: #333333;
+}
+.pay-content .pay-order-amount {
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+.pay-content .pay-button {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 5rem 0;
+}
+.pay-content .pay-button a {
+  text-decoration: none;
+  font-size: 16px;
+  text-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-weight: 600;
+  color: #ffffff;
+}
+.pay-content .pay-button .button1 {
+  display: inline-block;
+  padding: 1.2rem 3rem;
+  text-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 50%;
+  font-size: 1.4rem;
+  border-radius: 3px;
+  background-color: #00998d;
+  color: #ffffff;
+}
+.pay-content .pay-button .button2 {
+  padding: 1rem 3rem;
+  border-radius: 3px;
+  width: 50%;
+  display: inline-block;
+  background-color: #4c78cd;
+  margin-left: 2rem;
+}
+.pay-content .pay-button .button3 {
+  padding: 1rem 3rem;
+  border-radius: 3px;
+  display: inline-block;
+  background-color: #ffffff;
+  border: solid 1px #d0011b;
+  width: 50%;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #ff5a5f;
+}
+.pay-content .pay-button .button-refresh {
+  padding: 1rem 3rem;
+  border-radius: 3px;
+  width: 30%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border: solid 1px #00998d;
+  font-size: 16px;
+  text-align: center;
+  color: #00998d;
+}
+.address-button {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  padding: 15px;
+  width: 100%;
+  margin-top: 15px;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 3px;
+  background-color: #00998d;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  border: none;
+}
+.evaluation-content .top-content {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 0.5rem;
+  border-bottom: solid 1px #dddddd;
+  padding-bottom: 5px;
+}
+.evaluation-content .top-content .user-head {
+  width: 30%;
+  height: auto;
+}
+.evaluation-content .top-content .user-info {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.evaluation-content .top-content .user-info .name-value {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: 1rem;
+  margin-top: 0.1rem;
+}
+.evaluation-content .top-content .user-info .name-value .name {
+  font-size: 1.4rem;
+  line-height: 1.88;
+  color: #999999;
+}
+.evaluation-content .top-content .user-info .name-value .value {
+  font-size: 1.4rem;
+  line-height: 1.88;
+  color: #333333;
+}
+.evaluation-content .satisfaction {
+  margin: 1.5rem auto;
+  border-bottom: solid 1px #dddddd;
+  padding-bottom: 15px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  line-height: 20px;
+}
+.evaluation-content .satisfaction .satisfaction-name {
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  color: #333333;
+}
+.evaluation-content .satisfaction .satisfaction-star {
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+.evaluation-content .satisfaction .satisfaction-star .star {
+  width: 150px;
+  height: 20px;
+  margin: 0 10px;
+  background: url("../images/pay/satisfaction.png");
+  background-position: 0px 0px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.evaluation-content .satisfaction .satisfaction-star .star .divNoDisplay {
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.evaluation-content .evaluation-other {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: -1rem;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border-bottom: solid 1px #dddddd;
+}
+.evaluation-content .evaluation-other .evaluation-other-item {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1rem 0;
+  font-size: 1.4rem;
+  line-height: 1.1;
+  color: #333333;
+}
+.evaluation-content .evaluation-other .evaluation-other-item .other-right {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0 1.5rem;
+}
+.evaluation-content .evaluation-other .evaluation-other-item .other-right .other-right-yes {
+  margin-right: 1.5rem;
+}
+.evaluation-content .evaluation-other .evaluation-other-item .other-right .other-right-no {
+  margin-left: 1.5rem;
+}
+.evaluation-content .evaluation-other .evaluation-other-item .other-right img {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: -0.2rem;
+}
+.evaluation-content .advice {
+  margin-top: 1.5rem;
+  width: 100%;
+}
+.evaluation-content .advice .title {
+  font-size: 1.4rem;
+  line-height: 1.88;
+  color: #333333;
+}
+.evaluation-content .advice textarea {
+  width: 100%;
+  border: solid 1px #cccccc;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+.my-order-content .content {
+  background-color: #ffffff;
+  padding: 1.5rem;
+}
+.my-order-content .content .order-item {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #ffffff;
+}
+.my-order-content .content .order-item .item-top-content {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.my-order-content .content .order-item .item-top-content .create-time {
+  font-size: 1.2rem;
+  color: #333333;
+}
+.my-order-content .content .order-item .item-top-content .order-type1 {
+  font-size: 1.2rem;
+  color: #999999;
+}
+.my-order-content .content .order-item .item-top-content .order-type2 {
+  font-size: 1.2rem;
+  color: #ff5a5f;
+}
+.my-order-content .content .order-item .rent-time {
+  margin-bottom: 1.5rem;
+  margin-top: -1rem;
+}
+.my-order-content .content .order-item .item-middle-content {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.my-order-content .content .order-item .item-middle-content .left {
+  position: relative;
+  width: 45%;
+  margin-right: 1.5rem;
+}
+.my-order-content .content .order-item .item-middle-content .left img {
+  width: 100%;
+  height: 8.5rem;
+}
+.my-order-content .content .order-item .item-middle-content .left .user-type-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: solid 1px #dddddd;
+  width: 100%;
+  opacity: 0.4;
+}
+.my-order-content .content .order-item .item-middle-content .left .user-type-bg.green {
+  background-color: #00998d;
+}
+.my-order-content .content .order-item .item-middle-content .left .user-type-bg.blue {
+  background-color: #2a8cff;
+}
+.my-order-content .content .order-item .item-middle-content .left .user-type-bg p {
+  line-height: 2.5rem;
+  height: 2.5rem;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+.my-order-content .content .order-item .item-middle-content .right {
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+.my-order-content .content .order-item .item-middle-content .right .title {
+  font-size: 1.4rem;
+  color: #333333;
+}
+.my-order-content .content .order-item .item-middle-content .right .payed {
+  margin-top: 1.2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333333;
+}
+.my-order-content .content .order-item .item-middle-content .right .payed-two {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333333;
+}
+.my-order-content .content .order-item .server {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+.my-order-content .content .order-item .server .two {
+  margin-left: 2rem;
+}
+.my-order-content .item-bg {
+  background-color: #eeeeee;
+  height: 1rem;
+  width: 100%;
+}
+.order-detail-content .top {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  font-size: 1.2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: solid 1px #dddddd;
+}
+.order-detail-content .top .row {
+  margin: 0.5rem 0;
+}
+.order-detail-content .top .row .line {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0.3rem 0;
+}
+.order-detail-content .top .row .line .title {
+  width: 7rem;
+  line-height: 1.44;
+  font-size: 1.2rem;
+  color: #333333;
+}
+.order-detail-content .top .row .line .value {
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  line-height: 1.28;
+  color: #333333;
+  font-size: 1.2rem;
+}
+.order-detail-content .top .row .line .order-status {
+  color: #ff5a5f;
+  float: right;
+}
+.order-detail-content .top .row .top-left {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 9rem;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.order-detail-content .top .row .top-left .name {
+  letter-spacing: 0.38rem;
+}
+.order-detail-content .top .row .top-left span {
+  margin-top: 0.5rem;
+}
+.order-detail-content .top .row .top-right {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.order-detail-content .top .row .top-right span {
+  margin-top: 0.5rem;
+}
+.order-detail-content .top .row .top-right span .order-status {
+  color: #ff5a5f;
+  float: right;
+}
+.order-detail-content .content {
+  margin-top: 1.5rem;
+}
+.order-detail-content .content .order-item {
+  background-color: #ffffff;
+}
+.order-detail-content .content .order-item .top-content {
+  color: #ff5a5f;
+  font-size: 1.2rem;
+  margin-top: -0.5rem;
+  margin-bottom: 0.8rem;
+}
+.order-detail-content .content .order-item .server {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  padding-bottom: 1rem;
+  border-bottom: solid 1px #dddddd;
+}
+.order-detail-content .content .order-item .server .two {
+  margin-left: 2rem;
+}
+.order-detail-content .content .order-item .server .server-count {
+  margin-top: 1.5rem;
+  border-radius: 100px;
+  padding-top: 0.25rem;
+  background-color: #ff5a5f;
+  color: #ffffff;
+  width: 120px;
+  height: 20px;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  font-size: 1rem;
+}
+.order-detail-content .content .order-item .server .server-count2 {
+  margin-top: 1.5rem;
+  border-radius: 100px;
+  padding-top: 0.25rem;
+  background-color: #cccccc;
+  width: 120px;
+  height: 20px;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  color: #ffffff;
+}
+.order-detail-content .content .order-item .server-time-content {
+  border-bottom: solid 1px #dddddd;
+  padding: 1rem 0;
+  font-size: 1.2rem;
+  line-height: 1.64;
+}
+.order-detail-content .content .order-item .server-time-content .line .title {
+  width: 8rem;
+  display: inline-block;
+  line-height: 1.44;
+  font-size: 1.2rem;
+  color: #999999;
+}
+.order-detail-content .content .order-item .server-time-content .line .value {
+  line-height: 1.28;
+  color: #333333;
+  font-size: 1.2rem;
+}
+.order-detail-content .content .order-item .server-time-content .line2 {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.order-detail-content .content .order-item .server-time-content .line2 .title {
+  width: 10rem;
+  display: inline-block;
+  line-height: 1.44;
+  font-size: 1.2rem;
+  color: #999999;
+}
+.order-detail-content .content .order-item .server-time-content .line2 .list {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+.order-detail-content .content .order-item .server-time-content .line2 .list li {
+  margin: 0 1rem;
+}
+.order-detail-content .content .order-item .no-border {
+  border: none;
+}
+.order-detail-content .content .order-item .user-evaluate {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 1rem 0;
+  border-bottom: solid 1px #dddddd;
+}
+.order-detail-content .content .order-item .rent-button .rent-desc {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #ff5a5f;
+  text-align: left;
+}
+.order-detail-content .content .order-item .rent-button .rent-button2 {
+  margin: 0.6rem 0;
+  width: 100%;
+  height: 4.5rem;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+}
+.order-detail-content .pay-button {
+  margin: 5rem auto;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+}
+.order-detail-content .pay-button a {
+  text-decoration: none;
+  font-weight: 600;
+}
+.item-middle-content {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.item-middle-content .left {
+  position: relative;
+  width: 45%;
+  margin-right: 1.5rem;
+}
+.item-middle-content .left img {
+  width: 100%;
+  border: solid 1px #dddddd;
+}
+.item-middle-content .left .user-type-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: solid 1px #dddddd;
+  width: 100%;
+  opacity: 0.4;
+}
+.item-middle-content .left .user-type-bg.green {
+  background-color: #00998d;
+}
+.item-middle-content .left .user-type-bg.blue {
+  background-color: #2a8cff;
+}
+.item-middle-content .left .user-type-bg p {
+  line-height: 2.5rem;
+  height: 2.5rem;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+.item-middle-content .right {
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+.item-middle-content .right .title {
+  font-size: 1.4rem;
+  color: #333333;
+}
+.item-middle-content .right .payed {
+  margin-top: 1.2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333333;
+}
+.item-middle-content .right .payed-two {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333333;
+}
+.server-count {
+  margin-top: 1.5rem;
+  border-radius: 100px;
+  padding-top: 0.25rem;
+  background-color: #ff5a5f;
+  width: 120px;
+  color: #ffffff;
+  height: 20px;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+.server-count2 {
+  margin-top: 1.5rem;
+  border-radius: 100px;
+  padding-top: 0.25rem;
+  background-color: #cccccc;
+  width: 120px;
+  color: #ffffff;
+  height: 20px;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+.confirm-title {
+  font-size: 1.4rem;
+  font-weight: bolder;
+  text-align: center;
+}
+.no-rent-btn {
+  display: block;
+  height: 4rem;
+  line-height: 4rem;
+  width: 100%;
+  margin: 0.5rem 0;
+  margin-right: 0.5rem;
+  bottom: 0;
+  left: 0;
+  border-radius: 0.2rem;
+  text-align: center;
+  border: solid 1px #d0011b;
+  color: #ff5a5f;
+  font-size: 1.4rem;
+}
+.go-rent-btn {
+  display: block;
+  height: 4rem;
+  line-height: 4rem;
+  width: 100%;
+  margin: 0.5rem 0;
+  margin-left: 0.5rem;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  background-color: #00998d;
+  border-radius: 0.2rem;
+  color: #fff;
+  font-size: 1.4rem;
+}
+.go-pay {
+  display: inline-block;
+  padding: 1.2rem 0;
+  text-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 50%;
+  font-size: 1.4rem;
+  border-radius: 3px;
+  background-color: #00998d;
+  color: #ffffff;
+}
+.cancel {
+  display: inline-block;
+  padding: 1.2rem 0;
+  text-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 50%;
+  border-radius: 3px;
+  background-color: #ffffff;
+  border: solid 1px #d0011b;
+  margin-right: 2rem;
+  font-size: 1.4rem;
+  color: #ff5a5f;
+}
+.evaluate-btn {
+  float: right;
+  display: inline-block;
+  padding: 0.6rem 0;
+  text-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 25%;
+  font-size: 1.2rem;
+  border-radius: 3px;
+  background-color: #00998d;
+  color: #ffffff;
+}
+.rent-coupon-content .top {
+  background-color: #f4f4f4;
+  padding: 1rem;
+  padding-bottom: 1.5rem;
+}
+.rent-coupon-content .top .row {
+  color: #333333;
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+}
+.rent-coupon-content .top .row .line {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0.3rem 0;
+}
+.rent-coupon-content .top .row .line .title {
+  width: 7rem;
+  line-height: 1.44;
+  font-size: 1.2rem;
+  color: #333333;
+}
+.rent-coupon-content .top .row .line .value {
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  line-height: 1.28;
+  color: #333333;
+  font-size: 1.2rem;
+}
+.rent-coupon-content .top .row .top-middle-new-address {
+  margin-left: 0.5rem;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.rent-coupon-content .top .row .top-middle-new-address .new-address-info {
+  font-size: 1.4rem;
+  color: #333333;
+  margin: 2rem 0;
+}
+.rent-coupon-content .top .row .top-middle-new-address img {
+  width: 0.7rem;
+  height: 1.3rem;
+  float: right;
+}
+.rent-coupon-content .top .row .top-right {
+  margin: 1rem;
+  float: right;
+  margin-top: -0.5rem;
+}
+.rent-coupon-content .top .row .top-right img {
+  width: 0.7rem;
+  height: 1.3rem;
+}
+.rent-coupon-content .address-foot-img {
+  margin-top: -1rem;
+}
+.rent-coupon-content .offline-coupon {
+  margin-top: 0;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1.5rem;
+  padding-left: 0;
+  border-bottom: solid 1px #dddddd;
+}
+.rent-coupon-content .offline-coupon .desc-name {
+  font-size: 1.4rem;
+  color: #333333;
+  width: 20%;
+  margin-top: 0.5rem;
+}
+.rent-coupon-content .offline-coupon .input-coupon {
+  width: 60%;
+}
+.rent-coupon-content .offline-coupon .input-coupon input {
+  width: 100%;
+}
+.rent-coupon-content .offline-coupon .input-coupon .error-class {
+  height: 2rem;
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+  background-color: #ffffff;
+  border: solid 1px #ff5a5f;
+}
+.rent-coupon-content .offline-coupon .input-coupon .error-success {
+  height: 3rem;
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+  background-color: #ffffff;
+  font-size: 1.2rem;
+  border: solid 1px #999999;
+}
+.rent-coupon-content .offline-coupon .input-value-remove {
+  margin-left: 1.5rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin-top: 0.5rem;
+}
+.rent-coupon-content .user-info-desc {
+  border-bottom: solid 1px #dddddd;
+  padding-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+.rent-coupon-content .user-info-desc .user {
+  border-radius: 4px;
+  background-color: #ffffff;
+  border: solid 1px #ff5a5f;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  color: #ff5a5f;
+}
+.rent-coupon-content .user-info-desc .user span {
+  font-size: 1rem;
+  margin-left: 1.5rem;
+  color: #ff5a5f;
+}
+.rent-coupon-content .user-info-desc .rent-desc {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #ff5a5f;
+}
+.rent-coupon-content .coupons {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  border-bottom: solid 1px #dddddd;
+  padding: 1.5rem 0;
+}
+.rent-coupon-content .coupons .coupons-decs {
+  font-size: 1.4rem;
+  height: 3rem;
+  color: #333333;
+  width: 18%;
+  line-height: 3rem;
+}
+.rent-coupon-content .coupons .coupons-list .list {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  color: #333333;
+}
+.rent-coupon-content .coupons .coupons-list .list .choosed {
+  border-radius: 2px;
+  background-color: #ffffff;
+  border: solid 1px #ff5a5f;
+  font-size: 1.2rem;
+  color: #ff5a5f;
+}
+.rent-coupon-content .coupons .coupons-list .list .choosed2 {
+  border-radius: 2px;
+  font-size: 1.2rem;
+  color: #00998d;
+  border-color: #00998d;
+}
+.rent-coupon-content .coupons .coupons-list .list li {
+  border-radius: 2px;
+  background-color: #ffffff;
+  border: solid 1px #979797;
+  margin: 0.3rem;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+}
+.rent-coupon-content .coupons .no-coupons-desc {
+  font-size: 1.4rem;
+  color: #cccccc;
+  margin-left: 1rem;
+  margin-top: 0.2rem;
+}
+.rent-coupon-content .coupons .coupons-choose {
+  margin-left: 1rem;
+  padding-top: 0.2rem;
+}
+.rent-coupon-content .coupons .coupons-choose i img {
+  width: 0.8rem;
+  height: 1.6rem;
+}
+.rent-coupon-content .coupons .chk_1 {
+  display: none;
+}
+.rent-coupon-content .coupons .chk_1 + label {
+  background-color: #fff;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0px 3px #000000;
+  padding: 5px;
+  display: inline-block;
+  position: relative;
+  margin: 0 10px;
+}
+.rent-coupon-content .coupons .chk_1:checked + label {
+  background-color: #00998d;
+}
+.rent-coupon-content .coupons .text {
+  font-size: 1.2rem;
+}
+.rent-coupon-content .coupons .text .link {
+  text-decoration: underline;
+  color: #333;
+}
+.rent-coupon-content .product-info {
+  border-bottom: solid 1px #dddddd;
+  margin-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.rent-coupon-content .product-info .activity {
+  margin: 1rem 0;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.rent-coupon-content .product-info .activity .name {
+  border-radius: 3rem;
+  background-color: #ff5a5f;
+  font-size: 1rem;
+  color: #ffffff;
+  width: 3.5rem;
+  padding: 0.2rem;
+  padding-bottom: 0.15rem;
+}
+.rent-coupon-content .product-info .activity .desc {
+  color: #000000;
+  margin-left: 1rem;
+  font-size: 1.2rem;
+}
+.rent-coupon-content .half-one-years {
+  margin-top: 1rem;
+}
+.rent-coupon-content .half-one-years .title {
+  color: #333333;
+  font-size: 1.2rem;
+}
+.rent-coupon-content .half-one-years .title span {
+  color: #878787;
+  margin-left: 1rem;
+}
+.rent-coupon-content .half-one-years .desc {
+  padding: 1rem 0;
+  color: #878787;
+}
+.rent-coupon-content .half-one-years .choose-years {
+  padding: 0.5rem 0;
+}
+.rent-coupon-content .half-one-years .choose-years span {
+  font-size: 1.2rem;
+  border-radius: 0.2rem;
+  background-color: #ffffff;
+  border: solid 1px #979797;
+  margin-right: 2rem;
+  width: 5rem;
+  display: inline-block;
+  height: 2.5rem;
+  text-align: center;
+  line-height: 2.5rem;
+}
+.rent-coupon-content .half-one-years .choose-years .choosed-year {
+  color: #00998d;
+  border: solid 1px #00998d;
+}
+.rent-coupon-content .half-one-years .other-price22 {
+  padding: 1rem 0;
+  font-size: 1.2rem;
+  color: #333333;
+  border-bottom: solid 1px #eeeeee;
+}
+.rent-coupon-content .half-one-years .other-price22 .title2 {
+  font-size: 1.2rem;
+}
+.rent-coupon-content .half-one-years .other-price22 .title2 .small-value {
+  font-size: 1.1rem;
+}
+.rent-coupon-content .user-type {
+  margin: 1.5rem 0;
+}
+.rent-coupon-content .user-type .user {
+  font-size: 1.2rem;
+  color: #ff5a5f;
+  border-radius: 0.2rem;
+  background-color: #ffffff;
+  border: solid 1px #ff5a5f;
+  padding: 0.6rem 1.2rem;
+}
+.rent-coupon-content .price {
+  margin-top: 1rem;
+  padding-bottom: 7rem;
+}
+.rent-coupon-content .price .price-decs {
+  float: right;
+}
+.rent-coupon-content .price .price-decs .line {
+  margin-bottom: 0.2rem;
+}
+.rent-coupon-content .price .price-decs .line .title {
+  width: 6rem;
+  display: inline-block;
+  line-height: 1.44;
+  font-size: 1.4rem;
+  color: #333333;
+}
+.rent-coupon-content .price .price-decs .line .value,
+.rent-coupon-content .price .price-decs .line .main-value {
+  line-height: 1.28;
+  color: #333333;
+  font-size: 1.4rem;
+}
+.rent-coupon-content .price .price-decs .line .main-value {
+  font-weight: 600;
+}
+.rent-coupon-content .price .decs {
+  clear: right;
+  color: #878787;
+  font-size: 1.2rem;
+}
+.rent-coupon-content .price .line {
+  margin-bottom: 0.2rem;
+  font-size: 1.4rem;
+}
+.rent-coupon-content .price .line .main-value {
+  font-weight: 600;
+}
+.modal-temp {
+  display: none;
+}
+.pay-modal .modal-header2 {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-bottom: solid 1px #dddddd;
+  padding: 2rem;
+}
+.pay-modal .modal-header2 .close2 {
+  color: white;
+}
+.pay-modal .modal-header2 .title {
+  color: #333333;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.pay-modal .modal-header2 .close22 {
+  font-size: 1.2rem;
+  color: #000;
+}
+.pay-modal .modal-body .choose-box {
+  margin-bottom: 1rem;
+}
+.pay-modal .modal-body .choose-box .coupons-content {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  margin: 2rem 0 5rem 0;
+}
+.pay-modal .modal-body .choose-box .coupons-content li {
+  display: inline-block;
+  border: 1px solid #999;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 1rem;
+  font-size: 1.2rem;
+}
+.pay-modal .modal-body .choose-box .coupons-content li.choosed {
+  color: #00998d;
+  border-color: #00998d;
+}
+.pay-modal .modal-padding-block {
+  height: 5rem;
+}
+.disable {
+  color: #cccccc;
+}
+.server-count-coupons {
+  border-bottom: solid 1px #dddddd;
+  padding-bottom: 0.5rem;
+}
+.server-count-coupons .title {
+  margin: 1.5rem 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #333333;
+}
+.server-count-coupons .title span {
+  margin-left: 1.5rem;
+  color: #12897a;
+}
+.server-count-coupons .number-list {
+  margin-left: -1rem;
+  margin-top: -0.8rem;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+.server-count-coupons .number-list .checked-count {
+  font-size: 1.2rem;
+  color: #ff5a5f;
+  border: solid 1px #ff5a5f;
+}
+.server-count-coupons ul li {
+  border-radius: 2px;
+  background-color: #ffffff;
+  border: solid 1px #979797;
+  margin: 0.5rem 1rem;
+  font-size: 1.2rem;
+  color: #333333;
+  width: 3.5rem;
+  padding: 0.5rem 0;
+  text-align: center;
+}
+.other-price {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  color: #333333;
+}
+.other-price .line {
+  margin-bottom: 0.2rem;
+}
+.other-price .line .title {
+  width: 6rem;
+  display: inline-block;
+}
+.other-price .line .value {
+  margin-left: 1rem;
+}
+.spacing {
+  letter-spacing: 0.3rem;
+}

@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waterful", "Waterful\Waterful.csproj", "{FD849D97-DF7A-4006-9EE0-C9B6B868FE2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waterful.Back", "Waterful.Back\Waterful.Back.csproj", "{5F2AA2B0-7412-4A69-ADEB-342363E43CCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waterful.Wechat", "Waterful.Wechat\Waterful.Wechat.csproj", "{65B433CD-8192-4441-BEFE-9147A8F08102}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waterful.Core", "Waterful.Core\Waterful.Core.csproj", "{B9361D33-10AA-4022-9FA8-4134D4F2C396}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waterful.Service", "Waterful.Service\Waterful.Service.csproj", "{0053DA65-1F4A-4E9B-9A9C-6C604FCA0DF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waterful.File", "Waterful.File\Waterful.File.csproj", "{BAD90D56-C562-44B8-B3FD-E4CF5DB3F142}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD849D97-DF7A-4006-9EE0-C9B6B868FE2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD849D97-DF7A-4006-9EE0-C9B6B868FE2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD849D97-DF7A-4006-9EE0-C9B6B868FE2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD849D97-DF7A-4006-9EE0-C9B6B868FE2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F2AA2B0-7412-4A69-ADEB-342363E43CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F2AA2B0-7412-4A69-ADEB-342363E43CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F2AA2B0-7412-4A69-ADEB-342363E43CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F2AA2B0-7412-4A69-ADEB-342363E43CCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65B433CD-8192-4441-BEFE-9147A8F08102}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65B433CD-8192-4441-BEFE-9147A8F08102}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65B433CD-8192-4441-BEFE-9147A8F08102}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65B433CD-8192-4441-BEFE-9147A8F08102}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9361D33-10AA-4022-9FA8-4134D4F2C396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9361D33-10AA-4022-9FA8-4134D4F2C396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9361D33-10AA-4022-9FA8-4134D4F2C396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9361D33-10AA-4022-9FA8-4134D4F2C396}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0053DA65-1F4A-4E9B-9A9C-6C604FCA0DF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0053DA65-1F4A-4E9B-9A9C-6C604FCA0DF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0053DA65-1F4A-4E9B-9A9C-6C604FCA0DF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0053DA65-1F4A-4E9B-9A9C-6C604FCA0DF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD90D56-C562-44B8-B3FD-E4CF5DB3F142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD90D56-C562-44B8-B3FD-E4CF5DB3F142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD90D56-C562-44B8-B3FD-E4CF5DB3F142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD90D56-C562-44B8-B3FD-E4CF5DB3F142}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

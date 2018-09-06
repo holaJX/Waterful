@@ -1,0 +1,192 @@
+.company-content .image {
+  padding-top: 15px;
+}
+.company-content .image img {
+  width: 100%;
+  height: 200px;
+}
+.company-content .tel-title {
+  font-weight: bolder;
+  margin-top: 1.5rem;
+  font-size: 1.4rem;
+  color: #333333;
+}
+.company-content .tel {
+  color: #00998d;
+  font-size: 1.2rem;
+  padding: 1.2rem 0;
+  border-bottom: solid 1px #dddddd;
+}
+.company-content .tel span {
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 1.1;
+}
+.company-content .title h3 {
+  font-weight: bolder;
+  font-size: 1.8rem;
+}
+.company-content .describe .zw {
+  font-size: 1.2rem;
+  color: #666;
+}
+.spacing {
+  word-spacing: 0.3rem;
+}
+.share-content .images {
+  position: relative;
+  text-align: center;
+}
+.share-content .images .bg-img {
+  width: 100%;
+  z-index: -1;
+}
+.share-content .images .code-img {
+  position: absolute;
+  width: 36%;
+  left: 50%;
+  bottom: 8%;
+  margin-left: -18%;
+}
+.filter-img-content {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding-top: 1rem;
+}
+.filter-img-content .title-images {
+  margin-bottom: 25px;
+}
+.filter-img-content .title-images .title p {
+  font-weight: 600;
+  color: #333333;
+  font-size: 1.2rem;
+  padding: 0.2rem 0;
+}
+.filter-img-content .title-images .images img {
+  width: 100%;
+  height: 215px;
+}
+.my-love-content .images {
+  padding-top: 30px;
+  text-align: center;
+}
+.my-love-content .images img {
+  width: 70%;
+}
+.my-love-content .pay-describe-no-b {
+  text-align: center;
+  margin-top: 15px;
+  color: #262626;
+  font-size: 16px;
+}
+.my-love-content .title {
+  width: 100%;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  line-height: 24px;
+  padding-top: 15px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+.my-love-content .title .button-left {
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+  background-color: #ffffff;
+  border: solid 1px #979797;
+  padding: 6px 1rem;
+  color: #00998d;
+  border-right: none;
+}
+.my-love-content .title .button-middle {
+  background-color: #ffffff;
+  border: solid 1px #979797;
+  padding: 6px 0.8rem;
+  color: #00998d;
+  border-right: none;
+}
+.my-love-content .title .button-right {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  background-color: #ffffff;
+  border: solid 1px #979797;
+  padding: 6px 1rem;
+  color: #00998d;
+}
+.my-love-content .title .active {
+  background-color: #00998d;
+  color: white;
+}
+.my-love-content .user-list {
+  font-size: 1.2rem;
+}
+.my-love-content .user-list .lovers {
+  margin-top: 1rem;
+}
+.my-love-content .user-list .lovers li {
+  height: 4rem;
+  line-height: 4rem;
+  width: 100%;
+  padding-left: 0.5rem;
+  border-bottom: 1px solid #ddd;
+}
+.my-love-content .user-list .list-top {
+  margin-top: 2rem;
+  border-bottom: 1px solid #ddd;
+}
+.my-love-content .user-list .list-top p {
+  color: #333333;
+  font-size: 1.4rem;
+  margin: 1rem 0;
+}
+.my-love-content .user-list .list-top p span {
+  font-weight: bolder;
+  color: #fc404d;
+}
+.my-love-content .user-list .list {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+.my-love-content .user-list .list .list-content-top {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 15px 0 8px 0;
+}
+.my-love-content .user-list .list .list-content-top .time {
+  font-weight: 600;
+}
+.my-love-content .user-list .list .redFontClass {
+  color: red;
+}
+.my-love-content .user-list .share-success-count {
+  margin-top: 5px;
+}
+.my-love-content .user-list .deal-price {
+  margin-top: 5px;
+}
+.my-love-content .user-list .my-commission {
+  margin-top: 5px;
+}

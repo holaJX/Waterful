@@ -1,0 +1,505 @@
+@model Waterful.Wechat.ViewModels.OrderDetailsVM
+@using Waterful.Wechat.ViewModels;
+@{
+    ViewData["Title"] = "订单支付";
+    var isRenew = bool.Parse(ViewData["IsRenew"].ToString());
+    var isSecondYear = bool.Parse(ViewData["IsSecondYear"].ToString());
+    var isHalfYear = bool.Parse(ViewData["IsHalfYear"].ToString());
+    string[] levels = { "一般全户", "尊贵全户", "顶级全户" };
+    int[] discount = ViewData["SecondYearDiscount"] as int[];
+    var product = Model.OrderItems.FirstOrDefault().Product;
+    var action = (Model.Id == null || Model.Id <= 0) ? OrderAction.Create : OrderAction.Renew;
+}
+@using Waterful.Wechat.Extensions;
+<div id="paydiv"></div>
+<form action="" id="form1">
+    <div class="rent-coupon-content ">
+        <div class="top" id="address">
+        </div>
+        <div class="address-foot-img">
+            <img src="../../images/pay/address-choose-foot.png" alt="" />
+        </div>
+        <div class="content content-wrapper">
+            @if (isRenew)
+            {
+                if (product.CategoryId == Waterful.Core.Enums.CategoryEnum.ClearWater)
+                {
+                    if (Model.OrderType == 2)
+                    {
+                        <div class="user-info-desc">
+                            <div class="user">@levels[product.Level - 1] <span>含@(product.Level == 3 ? 6 : 3)次更换滤芯及水检服务</span></div>
+                            @if (isSecondYear)
+                            {
+                                <div class="rent-desc">*租用第二年，年付优惠@(discount[product.Level - 1])元</div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="user-type">
+                            <span href="" class="user">@levels[product.Level - 1]</span>
+                        </div>
+                    }
+                }
+                if (Model.OrderType == 1)
+                {
+                    <div class="server-count-coupons">
+                        <div class="title">后续更换滤芯及水检服务次数<span>@(Model.FilterPrice)元/次</span></div>
+                        <ul class="number-list" id="number_list">
+                            <li class="checked-count">1</li>
+                            <li>3</li>
+                            <li>6</li>
+                            <li>9</li>
+                            <li>12</li>
+                            <li>15</li>
+                        </ul>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="product-info">
+                    <div class="item-middle-content">
+                        <div class="left">
+                            <img src="@product.ImageUrl" alt="" />
+                            @if (product.CategoryId == Waterful.Core.Enums.CategoryEnum.ClearWater)
+                            {
+                                <div class="user-type-bg green">
+                                    <p>@levels[product.Level - 1]</p>
+                                </div>
+                            }
+                        </div>
+                        <div class="right">
+                            <div class="title">@product.Name</div>
+                        </div>
+                    </div>
+                    <div class="activity">
+                        @if (product.CategoryId == Waterful.Core.Enums.CategoryEnum.ClearWater)
+                        {
+                            <span class="name">活动</span>
+                            <span class="desc">
+                                @if (product.PaymentType == Waterful.Core.Enums.PaymentEnum.Buy)
+                                {
+                                    @:下单即送一个滤芯(*一个滤芯可使用6个月)
+                                    }
+                                @if (product.PaymentType == Waterful.Core.Enums.PaymentEnum.Rent)
+                                {
+                                    @:下单即送饮水器(*可使用12个月)
+                                    }
+                            </span>
+                        }
+                    </div>
+                </div>
+                <div class="half-one-years">
+                    @if (Model.OrderType == 2)
+                    {
+                        <div class="title">选择付款类型 <span>(*第一次租，租金可半年付)</span></div>
+                        <div class="desc">*半年付用户，在半年内只能使用一个滤芯+饮水机赠送，付完全款后，可以使用剩余服务。</div>
+                        <div class="choose-years" id="choosed_year">
+                            <input type="hidden" name="choosed_year" id="year_value" value="&yen;300优惠" />
+                            <span data-month="12" class="choosed-year">年付</span>
+                            <span data-month="6">半年付</span>
+                        </div>
+                    }
+                    <div class="other-price22">
+                        <div class="title2">
+                            <span>价格: &yen;@Model.Total</span>
+                            <span class="small-value price-description"></span>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (!isHalfYear)
+            {
+                @await Component.InvokeAsync("Coupons", new { cid = User.Identities.DefaultCustomerId(), payType = product.PaymentType, isRenew = isRenew })
+            }
+
+            <div class="coupons">
+                <input class="chk_1" type="checkbox" id="chk_1" checked="checked" />
+                <label for="chk_1"></label>
+                <div class="text">
+                    我已阅读
+                    @if (Model.OrderType == 1)
+                    {
+                    <a class="link" href="@Url.Action("Sell", "Home")" target="_blank">《净水器购销合同》</a>
+                    }
+                    else
+                    {
+                        <a class="link" href="@Url.Action("Rent", "Home")" target="_blank">《万得水全户活水租赁合同》</a>
+                    }
+                </div>
+            </div>
+
+            <div class="price">
+                <div class="price-decs">
+                    <div class="line">
+                        <span id="coupon_type" class="title"></span>
+                        <span id="coupon_discount" class="value"></span>
+                    </div>
+                    <div class="line">
+                        <span class="title">总计：</span>
+                        <span id="amout" class="main-value">&yen;@Model.Total</span>
+                    </div>
+                </div>
+                <div style="text-align:right" class="decs price-description"></div>
+            </div>
+        </div>
+        <div class="footer">
+            <a href="javascript:void(0);" type="submit" id="submitForm" class="buy-btn">微信支付</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        function priceDescription() {
+            var arr = new Array();
+            if (order.installAmount > 0 && '@isRenew' === 'False') {
+                arr.push('安装费¥' + order.installAmount);
+            }
+            if (order.depositAmount > 0  && '@isRenew' === 'False') {
+                arr.push('押金¥' + order.depositAmount);
+            }
+            if (order.data.serviceNumber > 0 && order.orderType == 1) {
+                arr.push('后续服务¥' + order.filterPrice + '×' + order.data.serviceNumber);
+            }
+            if (arr.length > 0) {
+                var str = '(包含' + arr.join('、') + ')';
+                $(".price-description").text(str);
+            }
+        }
+
+        $('#number_list li').click(function () {
+            $(this).addClass('checked-count').siblings().removeClass('checked-count');// 切换样式
+            order.data.serviceNumber = this.innerHTML;
+            //showLoyer(order.data.serviceNumber);
+            coupon.change();
+        });
+
+     
+
+
+        $("#submitForm").click(function () {
+            if (this.className.indexOf("disabled") != -1) {
+                return;
+            };
+
+            if (!$('#chk_1').prop("checked")) {
+                showLoyer("您未同意万得水服务协议，无法进行支付。");
+                return false;
+            }
+
+            order.submit();
+        });
+
+         var order = {
+            total: @Model.Total,
+            depositAmount: @Model.DepositAmount,
+            installAmount: @Model.InstallAmount,
+            filterPrice:@Model.FilterPrice,
+            orderType:@Model.OrderType,
+            data: {
+                id: '@Model.Id',
+                productId:'@product.Id',
+                amount: '@Model.Total',
+                street: '',
+                name: '',
+                mobile: '',
+                couponId: '',
+                month: '@(Model.OrderType == 2 ? 12:0)',
+                serviceNumber:@(isRenew?1:Model.ServiceNumber),
+                action:'@action'
+            },
+            submit: function () {
+                if (this.data.name == '' || this.data.mobile == '' || this.data.street == '') {
+                    showLoyer("请填写收货地址信息！"); return;
+                }
+                if (this.data.amount <= 0) {
+                    showLoyer("订单金额错误，请刷新重试！"); return;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Pay", "Order")',
+                    data: order.data,
+                    dataType: "json",
+                    beforeSend: function () {
+                        $("#form1").css({ opacity: 0.7 });
+                        $("#submitForm").addClass('disabled');
+                    },
+                    success: function (res) {
+                        if (res.err) {
+                            pay(res.data);
+                        }
+                        else {
+                            showLoyer(res.msg);
+                            $("#submitForm").removeClass('disabled');
+                        }
+                    },
+                    complete: function () {
+                        $("#form1").css({ opacity: 1 });
+                        $("#submitForm").removeClass('disabled');
+                    },
+                    error: function (e) {
+                        showLoyer('页面发生错误，请刷新后再试！');
+                    }
+                });
+            }
+        }
+
+        var coupon = {
+            id: null,
+            msg: '',
+            couponType: 0, //线上线下
+            type:0,//券类型
+            title:'',
+            discount: null,
+            feelTime:0,
+            description: '优惠：',
+            change: function () {
+                //1.消息
+                if (this.msg){
+                    //showLoyer(this.msg);
+                }
+                this.msg = null;
+                //2.优惠券赋值
+                if (this.couponType == 1) {
+                    $("#coupon_number").val('');
+                    $("#reset").attr("src", "");
+                    if ($("#coupon-selected")) {
+                        $("#coupon-selected").html('已选择 ' + this.title);
+                    }
+                }
+                else if (this.couponType == 2) {
+                    $("#reset").attr("src", "../../images/pay/coupon-" + (this.discount == null ? 'remove' : 'success') + ".png");
+                    if ($("#coupon-selected")) {
+                        $("#coupon-selected").html('选择优惠券');
+                    }
+                }
+
+                $("#coupon_type").html(this.description);
+                switch (this.type) {
+                    case 1: $("#coupon_discount").html(this.discount == null ? '' : '-&yen;' + this.discount); break;
+                    case 2: $("#coupon_discount").html('免费体验' + coupon.feelTime + '个月'); break;
+                    case 4: this.discount = order.installAmount; $("#coupon_discount").html(this.discount == null ? '' : '-&yen;' + this.discount);break;
+                    case 5: this.discount = order.depositAmount; $("#coupon_discount").html(this.discount == null ? '' : '-&yen;' + this.discount); break;
+                }
+                // 3.计算
+                var monthPrice = 0;
+
+                if (order.data.month == 6) {
+                    monthPrice = (order.total - order.depositAmount - order.installAmount) / 2;
+                }
+
+                var amount = order.total - monthPrice - this.discount;
+                if (order.data.month == 0 && '@isRenew' === 'True') {
+                    if (order.data.serviceNumber != 0) {
+                        amount = amount + (order.filterPrice * (order.data.serviceNumber - 1))
+                    }
+                }
+                order.data.couponId = this.id;
+                order.data.amount = amount;
+
+                $("#amout").html('&yen;' + amount);
+                priceDescription();
+            }
+        }
+
+        function sumbitChoose() {
+            layer.closeAll();
+        }
+
+        $(function () {
+            priceDescription();
+            //线下券验证
+            $("#coupon_number").change(function () {
+                if ($("#coupon_number").val() == "") {
+                    $("#reset").attr("src", "");
+                    $(".coupons-list .list li").first().addClass('choosed').siblings().removeClass('disable');
+                    $(".coupons-list .list li").css('border', '1px solid #979797');
+                    return;
+                }
+                var no = this.value;
+                if (no != ""){
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("GetOnLineCoupon", "Order")?no=' + no,
+                        beforeSend: function () {
+                            $("#form1").css({ opacity: 0.7 });
+                            $(".coupons-list .list li").addClass('disabled');
+                        },
+                        success: function (res) {
+                            if (res.err) {
+                                coupon.id = res.data.id;
+                                coupon.msg = res.msg;
+                                coupon.couponType = 2;
+                                coupon.discount = res.data.discount;
+                                coupon.type = res.data.type;
+                                coupon.feelTime = res.data.feelTime;
+                                coupon.change();
+                                $(".coupons-list .list li").addClass('disabled').removeClass('choosed2');
+                            }
+                            else {
+                                $("#reset").attr("src", "../../images/pay/coupon-remove.png");
+                                if ($("#coupon-selected")) {
+                                    $("#coupon-selected").html('选择优惠券');
+                                }
+                                $(".coupons-list .list li").removeClass('choosed2');
+                                coupon.id = null;
+                                coupon.msg = res.msg;
+                                coupon.couponType = 0;
+                                coupon.discount = null;
+                                coupon.type = 0;
+                                coupon.feelTime = 0;
+                                coupon.change();
+                            }
+                        },
+                        complete: function () {
+                            $("#form1").css({ opacity: 1 });
+                            $(".coupons-list .list li").removeClass('disabled');
+                        },
+                        error: function (e) {
+                            showLoyer('页面发生错误，请刷新后再试！');
+                        }
+                    });
+                }
+            });
+
+            // 优惠券 - 小于3张直选
+            $('#coupons_list li').click(function () {
+                if (this.className.indexOf("disabled") != -1) {
+                    return;
+                };
+                $(this).addClass('choosed2').siblings().removeClass('choosed2');// 切换样式
+                coupon.id = this.value;
+                coupon.msg = this.innerHTML;
+                coupon.couponType = 1;
+                coupon.discount = $(this).data('discount');
+                coupon.type = $(this).data('type');
+                coupon.feelTime = $(this).data('feeltime');
+                coupon.change();
+            });
+
+
+            // 优惠券 - 弹出层
+            var product_choose = document.getElementById("coupons_choose");
+            var duy_modal = document.getElementById("duy_modal");
+            var hasCoupons = $(".coupons-content li");
+            if (product_choose){
+            product_choose.onclick = function () {
+                // 无可用券时禁用弹出层
+                if (hasCoupons.length <= 3) {
+                    return;
+                }
+                layer.open({
+                    type: 1,
+                    className: 'buy-layer',
+                    content: duy_modal.innerHTML,
+                    anim: 'up',
+                    style: 'position:fixed; bottom:0; left:0; width: 100%; border:none;',
+                    success: function () {
+                        var choose_times = $('.buy-layer .coupons-type li');
+                        choose_times.each(function () {
+                            var liNode = $(this);
+                            $(this).click(function () {
+                                $('.buy-layer .coupons-type li.choosed').removeClass('choosed');
+                                liNode.addClass('choosed');
+                                coupon.id = this.value;
+                                coupon.msg = this.innerHTML;
+                                coupon.title = this.innerHTML;
+                                coupon.couponType = 1;
+                                coupon.discount = $(this).data('discount');
+                                coupon.type = $(this).data('type');
+                                coupon.feelTime = $(this).data('feeltime');
+                                coupon.change();
+                            })
+                        });
+                    }
+                });
+            };
+            }
+            // 租金 - 半年付/一年付
+            $('#choosed_year span').click(function () {
+                $(this).addClass('choosed-year').siblings().removeClass('choosed-year');// 切换样式
+                //showLoyer(this.innerHTML);
+                order.data.month = $(this).data('month');
+                coupon.change();
+            });
+        });
+
+
+
+        function pay(oid) {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("Pay","WeixinPay")?rqt=ajax&id=' + oid,
+                dataType: "html",
+                beforeSend: function () {
+                    $('#form1').css({ opacity: 0.7 });
+                },
+                success: function (data) {
+                    $('#form1').hide();
+                    $('#paydiv').html(data);
+                },
+                complete: function () {
+                    $('#form1').css({ opacity: 1 });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    showLoyer('页面发生错误，请刷新后再试！\rXMLHttpRequest.readyState:' + XMLHttpRequest.readyState + '\rXMLHttpRequest.status:' + XMLHttpRequest.status + '\textStatus:' + textStatus + '\errorThrown:' + errorThrown);
+                }
+            });
+        }
+        $(document).ready(function () {
+            initAddress();
+            function initAddress() {
+                var index = '@Url.Action("Index", "Address",new { target="back"})' + "&referrer=" + encodeURIComponent(window.location.href);
+                var create = '@Url.Action("Create", "Address",new { target="back"})' + "&referrer=" + encodeURIComponent(window.location.href);
+                $.ajax({
+                    type: "get",
+                    url: '@Url.Action("GetAddress","Address")' + "?r=" + Math.random(),
+                    success: function (res) {
+                        if (res.err) {
+                            var html = ' <div class="row"  id="jump">';
+                            html += ' <div class="line">';
+                            html += ' <span class="title spacing">收货人：</span>';
+                            html += '  <span class="value">' + res.data.name + '&emsp;' + res.data.mobile + '</span>';
+                            html += '</div>';
+
+                            html += ' <div class="top-right">';
+                            html += ' <i class="icon"><img src="../../images/icon/right-arrow.png" alt="" /></i>';
+                            html += '</div>';
+                            html += '<div class="line">';
+                            html += ' <span class="title">收货地址：</span>';
+                            html += '  <span class="value">' + res.data.display + '</span>';
+                            html += '</div>';
+                            html += '</div>';
+                            $("#address").append(html);
+                            $('#jump').click(function () {
+                                window.location.href = index;
+                            });
+                            order.data.street = res.data.display;
+                            order.data.name = res.data.name;
+                            order.data.mobile = res.data.mobile;
+                        } else {
+                            var html = ' <div class="row" id="jump">';
+                            html += '  <div class="top-middle-new-address" id="jumpAdd">';
+                            html += '  <span class="new-address-info">添加收货地址</span>';
+                            html += '  <img src="../../images/icon/right-arrow.png" alt=""/>';
+                            html += '</div>';
+                            html += '</div>';
+                            $("#address").append(html);
+                            $('#jump').click(function () {
+                                window.location.href = create;
+                            });
+
+                        }
+                    },
+                    error: function (e) {
+                        alert('页面发生错误，请刷新后再试！');
+                    }
+                });
+            }
+        });
+
+    </script>
+}

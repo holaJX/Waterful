@@ -1,0 +1,23 @@
+﻿@model Waterful.Core.Models.Product
+
+@{
+    ViewData["Title"] = "确认删除";
+    ViewData["MenuId"] = "0101";
+}
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">是否确认删除</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form asp-action="Delete" class="form-horizontal">
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" id="btnSubmit" class="btn btn-primary" style="width: 80px;">确认删除</button>
+                <a asp-action="Index" class="btn btn-primary" style="width: 80px;">返回</a>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+</section>

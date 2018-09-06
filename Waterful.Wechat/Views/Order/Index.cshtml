@@ -1,0 +1,73 @@
+@model List<Waterful.Core.Models.Order>
+@{
+    ViewData["Title"] = "我的订单";
+    var url = Url.Content("~/Order/Details/");
+    string[] levels = { "", "一般全户", "尊贵全户", "顶级全户" };
+    string[] status = { "已取消", "未支付", "已支付", "" };
+    string[] service = { "待服务", "已服务", "已评价" };
+    string[] payment = { "总价", "应付款", "已付款", "" };
+}
+@if (Model.Any())
+{
+    <div class="my-order-content">
+        @foreach (var item in Model)
+        {
+            var product = item.OrderItems.FirstOrDefault().Product;
+            var after = item.Aftersales.OrderByDescending(o => o.CreateTime).FirstOrDefault();
+            <div class="content" onclick="window.location='@(url + item.Id)'">
+                <div class="order-item">
+                    <div class="item-top-content">
+                        <div class="create-time">下单时间：@(item.CreateTime.ToString("yyyy年M月d日 HH:mm"))</div>
+                        @if (after != null)
+                        {
+                            <div class="order-type">@service[after.Status]</div>
+                        }
+                        else
+                        {
+                            <div class="order-type@(item.Status==0?"2":item.Status==-1?"1":"")">@status[item.Status + 1]</div>
+                        }
+                    </div>
+                    @if (item.DepositAmount == 0 && item.Status == 1 && item.NextPayTime != null)
+                    {
+                        var left = (item.NextPayTime.Value.Year - DateTime.Now.Year) * 12 + (item.NextPayTime.Value.Month - DateTime.Now.Month);
+                        left = left < 0 ? 0 : left;
+                        <div class="rent-time">租用剩余时间：@(left)个月</div>
+                    }
+                    <div class="item-middle-content">
+                        <div class="left">
+                            <img src="@product.ImageUrl" alt="">
+                            @if(product.CategoryId == Waterful.Core.Enums.CategoryEnum.ClearWater) { 
+                                <div class="user-type-bg green">
+                                    <p>@levels[product.Level]</p>
+                                </div>
+                            }
+                        </div>
+                        <div class="right">
+                            <div class="title">@product.Name</div>
+                            <div class="payed">@payment[item.Status + 1]：&yen;@item.Amount</div>
+                        </div>
+                    </div>
+                    <div class="server">
+                        @if (item.Status == 1)
+                    {
+                            <div class="server-count@(item.ServiceNumber==0?"2":"")">剩余@(item.ServiceNumber)次滤芯服务</div>
+                            if (product.CategoryId == Waterful.Core.Enums.CategoryEnum.ClearWater && product.PaymentType == Waterful.Core.Enums.PaymentEnum.Rent)
+                            {
+                                <div class="server-count two">送1次更换饮水机服务</div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="item-bg"></div>
+        }
+    </div>
+}
+else
+{
+    <div class="pay-content content-wrapper">
+        <div class="images"><img src="../../images/pay/my-empty-pay.png"></div>
+        <div class="pay-describe-no-b">您暂时还没有订单哦！</div>
+    </div>
+}
+

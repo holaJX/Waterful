@@ -1,0 +1,15 @@
+﻿@model Waterful.Wechat.ViewModels.ProductListVM
+@{
+    ViewData["Title"] = "万得水商城";
+}
+<div class="content-wrapper homepage">
+    @*<div class="logo">
+            <img src="../../images/logo.png" alt="万得水">
+        </div>*@
+    <div class="img-list">
+        <a href="/Product/Details/@Model.ClearBuyId"><img src="~/images/index-1.png" alt="净水系统-我要买"></a>
+        <a href="/Product/Details/@Model.ClearRentId"><img src="~/images/index-2.png" alt="净水系统-我要租"></a>
+        <a href="/Product/Details/@Model.DrinkId"><img src="~/images/index-3.png" alt="饮水器"></a>
+        <a href="/Product/Details/@Model.ShowerId"><img src="~/images/index-4.png" alt="沐浴器"></a>
+    </div>
+</div>

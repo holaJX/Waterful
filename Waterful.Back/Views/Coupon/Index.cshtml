@@ -1,0 +1,144 @@
+﻿
+@using X.PagedList;
+@using X.PagedList.Mvc.Core
+@model StaticPagedList<Waterful.Core.Models.Coupon>
+
+@{
+    ViewData["Title"] = "商城管理-券管理";
+    ViewData["MenuId"] = "0103";
+    var type = ViewData["type"] ?? "";
+    var coupontype = ViewData["coupontype"] ?? "";
+    var name = ViewData["name"] ?? "";
+    var couponno = ViewData["couponno"] ?? "";
+}
+<section class="content-header">
+    <h1>
+        商城管理-券管理
+    </h1>
+    @*<ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Tables</a></li>
+            <li class="active">Data tables</li>
+        </ol>*@
+</section>
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header">
+
+
+            <div>
+                <form asp-action="Index" method="get">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <select class="form-control" id="coupon_type_id" name="couponType">
+                                <option value="0" selected>全部</option>
+                                <option value="1">线上券</option>
+                                <option value="2">线下券</option>>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <select class="form-control" id="select_id" name="type">
+                                <option value="0" selected>全部</option>
+                                <option value="1">代金券</option>
+                                <option value="4">免安装费券</option>
+                                <option value="5">免押金券</option>
+                                <option value="2">体验券</option>
+                                @*<option value="3">礼品券</option>*@
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" id="coupontyp_id" value="@coupontype" />
+                    <input type="hidden" id="type_id" value="@type" />
+                    <div class="col-md-3"><div class="form-group"><input type="text" name="name" class="form-control" placeholder="输入券名称查询" value="@name" /></div></div>
+                    <div class="col-md-3"><div class="form-group"><input type="text" name="couponno" class="form-control" placeholder="输入兑换码查询" value="@couponno" /></div></div>
+                    <div class="col-lg-4"><a asp-action="Create" class="btn btn-primary" style="width: 70px;">添加</a><button type="submit" class="btn btn-default"><i class="fa fa-search"></i> 查询</button></div>
+                </form>
+            </div>
+        </div>
+        <div class="box-body table-responsive">
+            <table class="table table-hover table-striped" style="min-width:1100px;">
+                <thead>
+                    <tr>
+                        <th>
+                            编号
+                        </th>
+                        <th>
+                            兑换码
+                        </th>
+                        <th style="width:200px;">
+                            券名称
+                        </th>
+                        <th>
+                            有效期
+                        </th>
+                        <th>
+                            优惠金额
+                        </th>
+                        <th>
+                            券类型
+                        </th>
+                        <th>
+                            状态
+                        </th>
+                        <th>
+                            类别
+                        </th>
+                        <th>
+                            备注
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.CouponNo</td>
+                            <td>@item.Name</td>
+                            <td> @((int)item.Type == 2 ? item.FeelTime + "个月" : item.ExpiryDate.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                            <td>@item.Discount</td>
+                            <td>
+                                @((int)item.Type == 1 ? "代金券" : (int)item.Type == 2 ? "体验券" : (int)item.Type == 3 ? "礼品券" : (int)item.Type == 4 ? "免费安装券" : (int)item.Type == 5 ? "免押金券":"")
+                            </td>
+                            <td>@(item.Used == true ? "已使用" : "有效")</td>
+                            <td>@((int)item.CouponType == 1 ? "线上券" : "线下券")</td>
+                            <td>@item.Remark </td>
+                            <td>
+
+                                @if (item.Used)
+                                {
+                                    <button class="btn btn-info btn-sm" disabled>编辑</button>
+                                    <button class="btn btn-danger btn-sm" disabled>删除</button>
+
+                                }
+                                else
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm">编辑</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">删除</a>
+
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer">
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { p = page, type = type, coupontype = coupontype, name = name, couponno = couponno }))
+        </div>
+    </div>
+</section>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#select_id").val($("#type_id").val());
+        //coupon_type_id
+        $("#coupon_type_id").val($("#coupontyp_id").val());
+    });
+</script>
+

@@ -1,0 +1,276 @@
+.homepage .img-list {
+  padding: 1.2rem 0;
+}
+.homepage .img-list img {
+  width: 100%;
+}
+.swiper-container {
+  width: 100%;
+}
+.swiper-container img {
+  width: 100%;
+}
+.p-row {
+  padding: 0.8rem 0;
+}
+.buy-detail .product-name {
+  font-size: 1.4rem;
+  padding-bottom: 0;
+}
+.buy-detail .product-price {
+  font-size: 1.2rem;
+  color: #00998d;
+}
+.buy-detail .product-price .now {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+.buy-detail .product-price .old {
+  margin: 0 1rem;
+  color: #ccc;
+  text-decoration: line-through;
+}
+.buy-detail .product-activity .spec {
+  display: inline-block;
+  padding: 0 0.6rem;
+  height: 2rem;
+  line-height: 2rem;
+  border-radius: 5rem;
+  color: #fff;
+  background-color: #ff5a5f;
+  font-size: 1rem;
+}
+.buy-detail .product-activity .desc {
+  color: #ff5a5f;
+  font-size: 1.2rem;
+}
+.buy-detail .bullshit {
+  font-size: 1.1rem;
+  color: #878787;
+}
+.buy-detail .product-choose {
+  position: relative;
+  padding: 1.5rem 0;
+  margin-top: 0.5rem;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.2rem;
+}
+.buy-detail .product-choose .desc {
+  margin: 0 1rem;
+}
+.buy-detail .product-choose .icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  margin-top: -0.8rem;
+  height: 16px;
+}
+.buy-detail .product-choose .icon img {
+  height: 100%;
+}
+.buy-detail .product-introduction {
+  position: relative;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.2rem;
+}
+.buy-detail .product-introduction .icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  margin-top: -0.8rem;
+  height: 16px;
+}
+.buy-detail .product-introduction .icon img {
+  height: 100%;
+}
+.buy-detail .product-server {
+  border-bottom: 1px solid #ddd;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: #999;
+}
+.buy-detail .product-server .list li {
+  display: inline-block;
+  margin: 0.6rem 1rem 0 0;
+}
+.buy-detail .product-server .list li .icon {
+  margin-right: 0.3rem;
+  margin-bottom: 0.3rem;
+  width: 1.1rem;
+}
+.buy-detail .product-area {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 1.4rem;
+  padding-top: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+.buy-detail .product-area .title {
+  padding-right: 1.5rem;
+  margin-top: 0.1rem;
+  color: #999;
+  font-size: 1.2rem;
+}
+.buy-detail .product-area .area {
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  color: #00998d;
+}
+.buy-detail .product-area .area li {
+  display: inline-block;
+  margin-right: 0.3rem;
+  font-size: 1rem;
+}
+.buy-detail .product-detail {
+  padding-top: 1.5rem;
+}
+.buy-detail .product-detail .video-wrap {
+  width: 100%;
+  position: relative;
+  line-height: 0;
+}
+.buy-detail .product-detail .video-wrap .video {
+  width: 100%;
+  opacity: 0;
+}
+.buy-detail .product-detail .video-wrap .mask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+.buy-detail .product-detail .video-wrap .mask .bg-img {
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+}
+.buy-detail .product-detail .video-wrap .mask .play-icon {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -30px;
+  margin-top: -30px;
+  z-index: 11;
+}
+.buy-detail .product-detail .img-wrap {
+  width: 100%;
+  margin: 1.5rem auto;
+}
+.buy-detail .product-detail .img-wrap img {
+  width: 100%;
+}
+.modal-temp {
+  display: none;
+}
+.buy-modal .close-ico {
+  position: relative;
+  opacity: 0.7;
+  height: 1.5rem;
+}
+.buy-modal .close-ico img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+  height: 100%;
+}
+.buy-modal .scroll {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.buy-modal .modal-header {
+  padding: 0 1.5rem 0.5rem 1.5rem;
+}
+.buy-modal .modal-header .img-text {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+.buy-modal .modal-header .img-text .img {
+  max-width: 50%;
+  overflow: hidden;
+}
+.buy-modal .modal-header .img-text .img img {
+  max-width: 100%;
+  max-height: 10rem;
+}
+.buy-modal .modal-header .img-text .text {
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding-left: 1.5rem;
+}
+.buy-modal .modal-header .img-text .text span {
+  display: block;
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+.buy-modal .modal-body {
+  padding: 0.5rem 1.5rem;
+  max-height: 10%;
+}
+.buy-modal .modal-body .choose-box .title {
+  font-size: 1.2rem;
+}
+.buy-modal .modal-body .choose-box .desc {
+  margin: 0 0.5rem;
+  color: #00998d;
+  font-size: 1rem;
+}
+.buy-modal .modal-body .choose-box .content {
+  margin-top: 0.2rem;
+}
+.buy-modal .modal-body .choose-box .content li {
+  display: inline-block;
+  border: 1px solid #999;
+  border-radius: 4px;
+  font-size: 1.2rem;
+}
+.buy-modal .modal-body .choose-box .content li span {
+  margin-left: 2rem;
+  font-size: 1rem;
+}
+.buy-modal .modal-body .choose-box .content li.choosed {
+  color: #00998d;
+  border-color: #00998d;
+}
+.buy-modal .modal-body .choose-box .content.margin-small li {
+  margin: 0.5rem 1.5rem 1rem 0;
+}
+.buy-modal .modal-body .choose-box .content.margin-big li {
+  margin: 0.5rem 2.5rem 0.5rem 0;
+}
+.buy-modal .modal-body .choose-box .package li {
+  padding: 0.5rem 1rem;
+}
+.buy-modal .modal-body .choose-box .times li {
+  padding: 0.5rem 0;
+  width: 3rem;
+  text-align: center;
+}
+.buy-modal .modal-padding-block {
+  height: 5rem;
+}
+.introduction h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #333;
+  margin: 2rem auto;
+}
+.introduction .text-stage {
+  font-size: 1.4rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}

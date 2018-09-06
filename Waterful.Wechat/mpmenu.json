@@ -1,0 +1,51 @@
+﻿﻿ {
+  "button": [
+    {
+      "type": "view",
+      "name": "网上商城",
+      "url": "http://wechat.icj20.com/",
+      "sub_button": []
+    },
+    {
+      "type": "view",
+      "name": "分享有礼",
+      "url": "http://wechat.icj20.com/share/",
+      "sub_button": []
+    },
+    {
+      "name": "我的服务",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "我的订单",
+          "url": "http://wechat.icj20.com/order/",
+          "sub_button": []
+        },
+        {
+          "type": "view",
+          "name": "信息管理",
+          "url": "http://wechat.icj20.com/address/",
+          "sub_button": []
+        },
+        {
+          "type": "view",
+          "name": "我的爱心",
+          "url": "http://wechat.icj20.com/share/detail/",
+          "sub_button": []
+        },
+        {
+          "type": "view",
+          "name": "各区滤芯图",
+          "url": "http://wechat.icj20.com/home/fillter/",
+          "sub_button": []
+        },
+        {
+          "type": "view",
+          "name": "联系我们",
+          "url": "http://wechat.icj20.com/home/about/",
+          "sub_button": []
+        }
+      ]
+    }
+  ]
+}

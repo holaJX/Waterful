@@ -1,0 +1,43 @@
+﻿@model Waterful.Core.Models.Customer
+
+@{
+    ViewData["Title"] = "设置用户类型";
+    ViewData["MenuId"] = "0300";
+}
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">@ViewData["Title"]</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form asp-action="Set" class="form-horizontal">
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">用户类型</label>
+                    <div class="col-md-3">
+                        <select name="type" id="IsAngel" class="form-control">
+                            <option value="0">天使用户</option>
+                            <option value="1">大使用户</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" id="btnSubmit" class="btn btn-primary" style="width: 80px;">确认</button>
+                <a asp-action="Index" class="btn btn-primary" style="width: 80px;">返回</a>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+</section>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            //select默认值
+            var sel = ('@Model.IsAngel'=='True'?1 : 0);
+            console.info(sel);
+            $("#IsAngel").get(0).value = sel;
+        });
+    </script>
+}

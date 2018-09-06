@@ -1,0 +1,119 @@
+body,
+html,
+dl,
+ol,
+ul,
+table,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+p,
+td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+html {
+  font-family: 'sans-serif', "Microsoft YaHei", "微软雅黑", "Tahoma", "Helvetica";
+  font-size: 10px;
+  background: #fff;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+a {
+  text-decoration: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+img {
+  border: 0;
+  max-width: 100%!important;
+  vertical-align: middle;
+}
+ol,
+ul {
+  list-style: none;
+}
+@media screen and (min-width: 100px) {
+  /*  iPhone 4,5 */
+  html {
+    font-size: 10px;
+  }
+}
+@media screen and (min-width: 320px) {
+  /*  iPhone 4,5 */
+  html {
+    font-size: 10px;
+  }
+}
+@media screen and (min-width: 375px) {
+  /*  iPhone 6 */
+  html {
+    font-size: 12px;
+  }
+}
+@media screen and (min-width: 414px) {
+  /*  iPhone 6 plus */
+  html {
+    font-size: 12px;
+  }
+}
+@media screen and (min-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+}
+.content-wrapper {
+  width: 100%;
+  padding: 0 1.2rem;
+  box-sizing: border-box;
+}
+.content-wrapper .logo {
+  height: 50px;
+  margin: 2rem auto;
+  text-align: center;
+}
+.content-wrapper .logo img {
+  height: 100%;
+}
+.footer-padding-block {
+  height: 3rem;
+}
+.footer {
+  z-index: 100;
+  height: 5rem;
+  width: 100%;
+}
+.footer .buy-btn {
+  display: block;
+  height: 5rem;
+  line-height: 5rem;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  background-color: #00998d;
+  color: #fff;
+  font-size: 1.4rem;
+  z-index: 100;
+}

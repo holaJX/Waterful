@@ -1,0 +1,110 @@
+﻿@{
+    ViewData["Title"] = "分享统计 - 大使用户 - 分享详情";
+    ViewData["MenuId"] = "0602";
+    List<string> list1 = (List<string>)ViewData["list1"];
+    List<string> list2 = (List<string>)ViewData["list2"];
+    List<Waterful.Core.Models.Commission> list3 = (List<Waterful.Core.Models.Commission>)ViewData["list3"];
+}
+
+
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3>@ViewData["Title"]</h3>
+        </div>
+        <div class="box-body table-responsive">
+            <h3>关注人</h3>
+            <br />
+            @foreach (var item in list1)
+            {
+                <a class="btn btn-default">@item</a>
+            }
+            <br />
+            <h3>邀请成功购买人</h3>
+
+            <br />
+            @foreach (var item in list2)
+            {
+                <a class="btn btn-default">@item</a>
+            }
+            <br />
+            <h3>提成</h3>
+            <br />
+            
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>佣金</th>
+                        <th>创建时间</th>
+                        <th>订单金额</th>
+                        <th>提成比例</th>
+                        <th>状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in list3)
+                    {
+                        <tr>
+                            <td>@item.Amount.ToString("C")</td>
+                            <td>@item.CreateTime.ToString("yyyy年MM月dd日 HH:mm")</td>
+                            <td>@item.OrderAmount.ToString("C")</td>
+                            <td>@item.Rate.ToString("P")</td>
+                            @*<td>@(item.Status == 0 ? "未结算" : "已结算")</td>*@
+                            <td class="tdsb">
+                                @if (item.Status == 0)
+                                {
+                                    <a hrefpost="/Share/Set/@item.Id" class="btn btn-info btn-sm set">结算</a>
+                                }
+                                else
+                                {
+                                    <span>已结算</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a asp-action="Angel" class="btn btn-primary" style="width: 80px;">返回</a>
+</section>
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('.set').click(function () {
+                var btnSubmit = $(this);
+                if (!confirm('是否确认结算？')) {
+                    return false;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: btnSubmit.attr('hrefpost'),
+                    data: '',
+                    dataType: "json",
+                    beforeSend: function () {
+                        btnSubmit.css({ opacity: 0.7 });
+                        btnSubmit.prop('disabled', true).html('请稍等');
+                    },
+                    success: function (data) {
+                        if (data.err == 1) {
+                            btnSubmit.parent().html('已结算');
+                            //window.location.replace(data.msg);
+                        }
+                        else {
+                            btnSubmit.prop('disabled', false).html('失败');
+                            alert(data.msg);
+                        }
+                    },
+                    complete: function () {
+                        btnSubmit.css({ opacity: 1 });
+                    },
+                    error: function (e) {
+                        //btnSubmit.prop('disabled', false).html('确认评价');
+                        alert('页面发生错误，请刷新后再试！');
+                    }
+                });
+                return false;
+            });
+        })
+    </script>
+}

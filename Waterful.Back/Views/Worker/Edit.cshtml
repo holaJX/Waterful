@@ -1,0 +1,136 @@
+﻿@model Waterful.Core.Models.Worker
+
+@{
+    ViewData["Title"] = "编辑安装人员";
+    ViewData["MenuId"] = "0400";
+}
+<section class="content">
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">编辑安装人员</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form asp-action="Edit" class="form-horizontal">
+            <div class="box-body">
+                <input id="errorInfo" type="hidden" value="@ViewBag.ErrorInfo" />
+                <input id="Logo" name="Logo" type="hidden" value="@Model.Logo" />
+                <div class="form-group">
+                    <label class="col-md-2 control-label">工号</label>
+                    <div class="col-md-10">
+                        <input asp-for="WorkerNo" class="form-control" />
+                        <span asp-validation-for="WorkerNo" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">姓名</label>
+                    <div class="col-md-10">
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">电话</label>
+                    <div class="col-md-10">
+                        <input asp-for="Mobile" class="form-control" />
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">备注</label>
+                    <div class="col-md-10">
+                        <textarea asp-for="Remark" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="Remark" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"></label>
+                    <div class="col-md-6" id="pic">
+                        @if (!string.IsNullOrWhiteSpace(Model.Logo))
+                        {
+                            <img style="max-height:300px;max-width:300px;" class="avatar" src="@Model.Logo" />
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">头像</label>
+                    <div class="col-md-6">
+                        <span class="btn btn-success fileinput-button">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>选择文件</span>
+                            <!-- The file input field used as target for the file upload widget -->
+                            <input id="fileupload" type="file" name="files" accept="image/jpg,image/jpeg,image/png">
+                        </span>
+                        <!-- The global progress bar -->
+                        <div id="progress" class="progress" style="display:none;">
+                            <div class="progress-bar progress-bar-success"></div>
+                        </div>
+                        <!-- The container for the uploaded files -->
+                        <div id="files" class="files"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" id="btnSubmit" class="btn btn-primary" style="width: 80px;">保存</button>
+                <a asp-action="Index" class="btn btn-primary" style="width: 80px;">返回</a>
+            </div>
+            <!-- /.box-footer -->
+        </form>
+    </div>
+
+</section>
+@section scripts{
+    <script src="~/lib/layer/build/layer.js"></script>
+
+    <link href="~/lib/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet" />
+    <script src="~/lib/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="~/lib/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+    <script src="~/lib/jquery-file-upload/js/jquery.fileupload.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#fileupload').fileupload({
+                url: "/File/UploadLogo",
+                //dataType: 'json',
+                done: function (e, data) {
+                    console.log('done1', data);
+                },
+                add: function (e, data) {
+                    console.log('add1', data);
+                    $('#progress').show();
+                    data.submit();
+                },
+                progress: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#progress .progress-bar').css('width', progress + '%');
+                },
+                success: function (res, status) {
+                    console.log('success1', res);
+                    if (res && res.success) {
+                        $('#progress').hide();
+                        $('#progress div').css('width', '0%');
+                        //
+                        $('#pic').html('<img src="' + res.url + '" />');
+                        $('#Logo').val(res.url);
+                    } else {
+                        alert(res.msg);
+                    }
+                },
+                error: function (error) {
+                    console.log('error1', error);
+                    $('#progress').hide();
+                    $('#progress div').css('width', '0%');
+                }
+            });
+            //.prop('disabled', !$.support.fileInput)
+            //.parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+
+            //显示服务端验证的错误信息
+            if ($("#errorInfo").val()) {
+                layer.tips($("#errorInfo").val(), "#btnSubmit");
+            };
+        });
+
+    </script>
+}

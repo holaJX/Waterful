@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewData["Title"] = "登录";
+}
+
+<div class="login content-wrapper">
+    <div class="logo">
+        <img src="~/images/logo.png" alt="万得水">
+    </div>
+    <form class="login-form bv-form" id="postForm" onsubmit="return false;" action="@Url.Action("login","passport",new { returnUrl=ViewData["ReturnUrl"] })" method="post">
+
+        @*<div class="form-group">
+                <input type="text" class="form-control" name="Phone" maxlength="30" placeholder="用户名">
+            </div>*@
+        <div class="form-group input-box">
+            <div class="input-start">+86</div>
+            <input type="tel" class="input-main form-control" name="Phone" id="Phone" placeholder="手机号码" maxlength="11" required>
+            <button class="input-end" type="button" id="btnGetcode">获取验证码</button>
+            <small class="help-block">&nbsp;</small>
+        </div>
+        <div class="form-group">
+            <input type="number" class="form-control" name="ValidCode" id="ValidCode" placeholder="验证码" maxlength="6" required>
+            <small class="help-block">&nbsp;</small>
+        </div>
+        <button type="button" id="btnSubmit" class="btn btn-login">登录</button>
+        @Html.AntiForgeryToken()
+    </form>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            var Phone = $("#Phone"),
+                ValidCode = $("#ValidCode"),
+                btnSubmit = $("#btnSubmit"),
+                GetValiCode = $("#btnGetcode"),
+                postForm = $('#postForm'),
+                isgoUn = false,
+                isgoPwd = false;
+
+            Phone.blur(function () {
+                var _old = $(this).val();
+                if (!IsTelePhone(_old)) {
+                    set_alert_msg(this, "请正确输入手机号码！");
+                    isgoUn = false;
+                }
+                else {
+                    clear_alert_msg(this);
+                    isgoUn = true;
+                }
+            });
+
+            ValidCode.blur(function () {
+                var _old = $(this).val();
+                if (!IsIntNum(_old)) {
+                    set_alert_msg(this, "请正确输入验证码！");
+                    isgoPwd = false;
+                }
+                else {
+                    clear_alert_msg(this);
+                    isgoPwd = true;
+                }
+            });
+
+            var token = btnSubmit.next("input[name='__RequestVerificationToken']").val();
+
+            btnSubmit.click(function () {
+                Phone.blur();
+                ValidCode.blur();
+                if (isgoUn && isgoPwd) {
+                    $.ajax({
+                        type: "POST",
+                        url: postForm.prop('action'),
+                        data: postForm.serialize(),
+                        dataType: "json",
+                        beforeSend: function () {
+                            postForm.css({ opacity: 0.7 });
+                            btnSubmit.prop('disabled', true).html('登录中')
+                        },
+                        success: function (data) {
+                            if (data.err == 1) {
+                                showLoyer('登录成功');
+                                btnSubmit.html('登录成功');
+                                window.location.replace(data.msg);
+                            }
+                            else {
+                                btnSubmit.prop('disabled', false).html('登录');
+                                showLoyer(data.msg);
+                            }
+                            ValidCode.val('');
+                        },
+                        complete: function () {
+                            postForm.css({ opacity: 1 });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            btnSubmit.prop('disabled', false).html('登录');
+                            showLoyer('系统繁忙,请稍后尝试。' + textStatus);
+                            //showLoyer('页面发生错误，请刷新后再试！\rXMLHttpRequest.readyState:' + XMLHttpRequest.readyState + '\rXMLHttpRequest.status:' + XMLHttpRequest.status + '\textStatus:' + textStatus + '\errorThrown:' + errorThrown);
+                        }
+                    });
+                }
+                else {
+                    return false;
+                }
+            });
+
+            GetValiCode.click(function () {
+                valicode($(this));
+            });
+
+            function valicode(obj) {
+                Phone.blur();
+                if (isgoUn) {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("Message")',
+                        data: { "id": Phone.val(), "__RequestVerificationToken": token, "r": Math.random() },
+                        dataType: "json",
+                        beforeSend: function () {
+                            obj.prop('disabled', true).html("发送中…");
+                        },
+                        success: function (data) {
+                            if (data.err == 0) {
+                                obj.val('获取验证码')
+                            }
+                            showLoyer(data.msg);
+                           countTimer(obj);
+                        },
+                        complete: function () {
+                            //obj.html('发送成功');
+                            ValidCode.focus();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            showLoyer('系统繁忙,请稍后尝试。' + textStatus);
+                            //showLoyer('页面发生错误，请刷新后再试！\rXMLHttpRequest.readyState:' + XMLHttpRequest.readyState + '\rXMLHttpRequest.status:' + XMLHttpRequest.status + '\textStatus:' + textStatus + '\errorThrown:' + errorThrown);
+                        }
+                    });
+                } else {
+                    Phone.focus();
+                }
+            };
+
+            function countTimer(obj) {
+                var i = 61;
+                var timer = setInterval(fn, 1000);
+                function fn() {
+                    obj.html(--i + "重新获取");
+                    if (i == 0) {
+                        window.clearInterval(timer);
+                        obj.prop('disabled', false).html('获取验证码').off('click').click(function () {
+                            valicode(obj);
+                        });
+                    }
+                };
+            };
+
+            function IsTelePhone(x) {
+                if (typeof x == "undefined") {
+                    return false;
+                }
+                var re = /^(\+86)?1[3,4,5,7,8](\d{9})$/;
+                return TestRegExp(re, x);
+            };
+
+            function IsIntNum(x) {
+                if (typeof x == "undefined") {
+                    return false;
+                }
+                var re = /^[0-9]\d*$/;
+                return TestRegExp(re, x);
+            };
+
+            //检查输入内容是否通过正则校验
+            function TestRegExp(re, text) {
+                re = new RegExp(re);
+                return re.test(text);
+            };
+
+            //不符合标红提醒
+            function set_alert_msg(object, msg) {
+                $(object).nextAll('small').text(msg).parent('div').addClass('has-error');
+            };
+
+            //符合清除提醒
+            function clear_alert_msg(object) {
+                $(object).nextAll('small').html('&nbsp;').parent('div').removeClass('has-error');
+            };
+        });
+    </script>
+}
